@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  db:
+    image: rethinkdb
+    ports:
+      - "8080:8080"
+
+  backend:
+    build: .
+    command: mix phoenix.server
+    environment:
+      - LOGGY_STACKS=1
+    volumes:
+      - .:/app
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
