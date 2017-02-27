@@ -17,6 +17,5 @@ RUN apt-get install -y -q nodejs
 RUN apt-get install -y -q inotify-tools
 
 # Set /app as workdir
-RUN mkdir /app
 ADD . /app
 WORKDIR /app
