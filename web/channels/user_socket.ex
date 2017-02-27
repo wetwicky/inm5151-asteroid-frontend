@@ -2,7 +2,7 @@ defmodule Asteroidsio.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", Asteroidsio.RoomChannel
+  channel "player:*", Asteroidsio.PlayerChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
