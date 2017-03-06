@@ -4,7 +4,7 @@
 import React from 'react';
 import { Loop, Stage } from 'react-game-kit';
 
-class AppComponent extends React.Component {
+class GameComponent extends React.Component {
   render() {
     return (
       <div>
@@ -17,7 +17,7 @@ class AppComponent extends React.Component {
   }
 }
 
-AppComponent.defaultProps = {
+GameComponent.defaultProps = {
 };
 
-export default AppComponent;
+export default GameComponent;
