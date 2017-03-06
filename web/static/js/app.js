@@ -23,7 +23,19 @@ import socket from "./socket"
 import 'core-js/fn/object/assign';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Game from './components/Main';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import Game from './containers/app';
+import reducer from './reducers';
+
+const store = createStore(
+    reducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 // Render the main component into the dom
-ReactDOM.render(<Game />, document.getElementById('app'));
+ReactDOM.render(
+    <Provider store={store}>
+      <Game />
+    </Provider>,
+    document.getElementById('app')
+);
