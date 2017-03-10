@@ -7,7 +7,7 @@ let Game = ({ dispatch,
   return (
       <div>
         <h1>
-        Game here
+          Game here
         </h1>
         <button onClick={e => {
           dispatch(endGame())
