@@ -6,7 +6,8 @@ import { connect } from 'react-redux'
 import Game from '../containers/game'
 import Login from '../containers/login'
 
-let App = ({ gameStarted }) => {
+let App = ({ gameStarted,
+             name }) => {
   console.log(gameStarted);
   if (gameStarted) {
     return <Game />
@@ -16,7 +17,8 @@ let App = ({ gameStarted }) => {
 }
 
 const mapStateToProps = (state) => ({
-  gameStarted: state.game.gameStarted
+  gameStarted: state.game.gameStarted,
+  name: state.game.name
 })
 
 App = connect(mapStateToProps)(App)

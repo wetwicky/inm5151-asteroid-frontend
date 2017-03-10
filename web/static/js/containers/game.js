@@ -2,10 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { endGame } from '../actions'
 
-let Game = ({ dispatch }) => {
+let Game = ({ dispatch,
+              name }) => {
   return (
       <div>
-        <h1>Game here</h1>
+        <h1>
+        Game here
+        </h1>
         <button onClick={e => {
           dispatch(endGame())
         }}>
@@ -14,6 +17,11 @@ let Game = ({ dispatch }) => {
       </div>
     )
 }
-Game = connect()(Game)
+
+const mapStateToProps = (state) => ({
+  name: state.game.name
+})
+
+Game = connect(mapStateToProps)(Game)
 
 export default Game
