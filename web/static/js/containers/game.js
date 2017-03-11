@@ -1,24 +1,7 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {disconnect, sendHello} from '../actions'
-
-let Game = ({onDisconnect, sendHello}) => {
-    return (
-        <div>
-            <h1>Game here</h1>
-            <button onClick={e => {
-                sendHello()
-            }}>
-                Send hello
-            </button>
-            <button onClick={e => {
-                onDisconnect()
-            }}>
-                Disconnect
-            </button>
-        </div>
-    )
-}
+import { connect } from 'react-redux'
+import { disconnect, sendHello } from '../actions'
+import { Game as GameComponent } from '../components/game'
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onDisconnect: () => {
@@ -29,6 +12,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
 })
 
-Game = connect(null, mapDispatchToProps)(Game)
+Game = connect(null, mapDispatchToProps)(GameComponent)
 
 export default Game
