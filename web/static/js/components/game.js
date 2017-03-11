@@ -1,3 +1,4 @@
+import React from 'react'
 
 let Game = ({onDisconnect, sendHello}) => {
     return (
@@ -16,3 +17,5 @@ let Game = ({onDisconnect, sendHello}) => {
         </div>
     )
 }
+
+export default Game

@@ -34,7 +34,6 @@ const socketMiddleware = (function () {
     const onMessage = (ws, store) => event => {
         // Parse the JSON message received on the websocket
         var msg = event.payload
-        console.warn(event)
         switch (msg.type) {
             case 'RECEIVE_HELLO':
                 store.dispatch(receiveHello(msg))

@@ -1,3 +1,4 @@
+import React from 'react'
 
 let Login = ({name, onSubmitDispatch, setNameDispatch}) => {
     let input

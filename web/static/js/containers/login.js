@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { connect as connectAction, setName } from '../actions'
-import { Login as LoginComponent } from '../components/login'
+import LoginComponent from '../components/login'
 
 const mapStateToProps = (state, ownProps) => ({
     name: state.game.name
@@ -16,6 +16,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     }
 })
 
-Login = connect(mapStateToProps, mapDispatchToProps)(LoginComponent)
+let Login = connect(mapStateToProps, mapDispatchToProps)(LoginComponent)
 
 export default Login
