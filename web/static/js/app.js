@@ -18,24 +18,25 @@ import "phoenix_html"
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 
-import socket from "./socket"
+import 'core-js/fn/object/assign'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { createStore, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
+import socketMiddleware from './middleware/socket'
 
-import 'core-js/fn/object/assign';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import Game from './containers/app';
-import reducer from './reducers';
+import App from './containers/app'
+import reducer from './reducers'
 
 const store = createStore(
     reducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+    applyMiddleware(socketMiddleware))
 
 // Render the main component into the dom
 ReactDOM.render(
     <Provider store={store}>
-      <Game />
+      <App />
     </Provider>,
     document.getElementById('app')
-);
+)

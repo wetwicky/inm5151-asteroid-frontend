@@ -1,19 +1,35 @@
-const game = (state = {}, action) => {
-  switch (action.type) {
-    case 'START_GAME':
-      return {
-        ...state,
-        gameStarted: true,
-        name: action.name
-      };
-    case 'END_GAME':
-      return {
-        ...state,
-        gameStarted: false
-      };
-    default:
-      return state
-  }
+const game = (state = {
+    gameStarted: false,
+    name: '',
+    hellos: []
+}, action) => {
+    switch (action.type) {
+        case 'CONNECTED':
+            return {
+                ...state,
+                gameStarted: true,
+            }
+        case 'DISCONNECTED':
+            return {
+                ...state,
+                gameStarted: false
+            }
+        case 'SET_NAME':
+            return {
+                ...state,
+                name: action.name
+            }
+        case 'RECEIVE_HELLO':
+            return {
+                ...state,
+                hellos: [
+                    ...state.hellos,
+                    action.payload
+                ]
+            }
+        default:
+            return state
+    }
 }
 
 export default game;

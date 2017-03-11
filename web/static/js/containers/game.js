@@ -1,19 +1,34 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { endGame } from '../actions'
+import {connect} from 'react-redux'
+import {disconnect, sendHello} from '../actions'
 
-let Game = ({ dispatch }) => {
-  return (
-      <div>
-        <h1>Game here</h1>
-        <button onClick={e => {
-          dispatch(endGame())
-        }}>
-          Disconnect
-        </button>
-      </div>
+let Game = ({onDisconnect, sendHello}) => {
+    return (
+        <div>
+            <h1>Game here</h1>
+            <button onClick={e => {
+                sendHello()
+            }}>
+                Send hello
+            </button>
+            <button onClick={e => {
+                onDisconnect()
+            }}>
+                Disconnect
+            </button>
+        </div>
     )
 }
-Game = connect()(Game)
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    onDisconnect: () => {
+        dispatch(disconnect())
+    },
+    sendHello: () => {
+        dispatch(sendHello())
+    },
+})
+
+Game = connect(null, mapDispatchToProps)(Game)
 
 export default Game

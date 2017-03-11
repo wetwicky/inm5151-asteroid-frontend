@@ -7,7 +7,6 @@ import Game from '../containers/game'
 import Login from '../containers/login'
 
 let App = ({ gameStarted }) => {
-  console.log(gameStarted);
   if (gameStarted) {
     return <Game />
   } else {
