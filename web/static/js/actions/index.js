@@ -1,43 +1,54 @@
+import {
+    CONNECT,
+    CONNECTING,
+    CONNECTED,
+    DISCONNECT,
+    DISCONNECTED,
+    SET_NAME,
+    SEND_HELLO,
+    RECEIVE_HELLO
+} from '../constants'
+
 export const connect = () => {
     return {
-        type: 'CONNECT'
+        type: CONNECT
     }
 }
 
 export const connecting = () => {
     return {
-        type: 'CONNECTING'
+        type: CONNECTING
     }
 }
 
 export const connected = () => {
     return {
-        type: 'CONNECTED'
+        type: CONNECTED
     }
 }
 
 export const disconnect = () => {
     return {
-        type: 'DISCONNECT'
+        type: DISCONNECT
     }
 }
 
 export const disconnected = () => {
     return {
-        type: 'DISCONNECTED'
+        type: DISCONNECTED
     }
 }
 
 export const setName = (name) => {
     return {
-        type: 'SET_NAME',
+        type: SET_NAME,
         name: name
     }
 }
 
 export const sendHello = (from) => {
     return {
-        type: 'SEND_HELLO',
+        type: SEND_HELLO,
         payload: {
             from: from
         }
@@ -47,6 +58,6 @@ export const sendHello = (from) => {
 export const receiveHello = (payload) => {
     return {
         ...payload,
-        type: 'RECEIVE_HELLO'
+        type: RECEIVE_HELLO
     }
 }

@@ -2,6 +2,9 @@
 
 import {Socket} from 'phoenix'
 import { connecting, connected, disconnect, disconnected, receiveHello } from '../actions'
+import { CONNECT, DISCONNECT, SEND_HELLO, RECEIVE_HELLO} from "../constants/index";
+import {CONNECT} from "../constants/index";
+import {RECEIVE_HELLO} from "../constants/index";
 
 const socketMiddleware = (function () {
     var socket = null
@@ -35,7 +38,7 @@ const socketMiddleware = (function () {
         // Parse the JSON message received on the websocket
         var msg = event.payload
         switch (msg.type) {
-            case 'RECEIVE_HELLO':
+            case RECEIVE_HELLO:
                 store.dispatch(receiveHello(msg))
                 break
             case undefined:
@@ -49,7 +52,7 @@ const socketMiddleware = (function () {
     return store => next => action => {
         switch (action.type) {
             // The user wants to connect
-            case 'CONNECT':
+            case CONNECT:
             {
                 // Start a new connection to the server
                 if (channel != null) {
@@ -74,7 +77,7 @@ const socketMiddleware = (function () {
                 break;
             }
 
-            case 'DISCONNECT':
+            case DISCONNECT:
             {
                 if (socket != null) {
                     socket.disconnect();
@@ -88,13 +91,13 @@ const socketMiddleware = (function () {
                 break;
             }
 
-            case 'SEND_HELLO':
+            case SEND_HELLO:
             {
                 if (socket == null) {
                     return
                 }
 
-                channel.push('SEND_HELLO')
+                channel.push(SEND_HELLO)
             }
 
             default:
