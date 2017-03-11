@@ -15,7 +15,7 @@ let App = ({ gameStarted }) => {
 }
 
 const mapStateToProps = (state) => ({
-  gameStarted: state.game.gameStarted
+  gameStarted: state.game.gameStarted,
 })
 
 App = connect(mapStateToProps)(App)
