@@ -30,7 +30,6 @@ const game = (state = {
                 name: action.name
             }
         case WINDOW_RESIZE:
-            console.log(action)
             return {
                 ...state,
                 ...action.payload

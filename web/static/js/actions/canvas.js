@@ -7,9 +7,8 @@ export function windowResize({ w, h }) {
     };
 }
 
-export function update({ x, y, direction }) {
+export function update() {
     return {
         type: UPDATE,
-        payload: { x: x, y: y, direction: direction },
     };
 }

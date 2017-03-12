@@ -8,6 +8,8 @@ export const SET_NAME = 'SET_NAME'
 
 // Canvas
 export const WINDOW_RESIZE = 'WINDOW_RESIZE'
+
+// Player
 export const UPDATE = 'UPDATE'
 
 // TEST
