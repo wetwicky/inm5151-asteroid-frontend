@@ -1,22 +1,38 @@
 /* This file is for your main application css. */
 body {
-  color: #bbb;
-  background: #222;
+    color: #bbb;
+    background: #222;
+    margin: 0px;
+    padding: 0px;
+}
+
+.container {
+    max-width: 100%;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+.login {
+    text-align: center;
 }
 
 .index img {
-  margin: 40px auto;
-  border-radius: 4px;
-  background: #fff;
-  display: block;
+    margin: 40px auto;
+    border-radius: 4px;
+    background: #fff;
+    display: block;
 }
 
 .index .notice {
-  margin: 20px auto;
-  padding: 15px 0;
-  text-align: center;
-  border: 1px solid #000;
-  border-width: 1px 0;
-  background: #666;
+    margin: 20px auto;
+    padding: 15px 0;
+    text-align: center;
+    border: 1px solid #000;
+    border-width: 1px 0;
+    background: #666;
 }
 
+svg {
+    background: #000 url('../images/starbackground.png') top left repeat;
+}

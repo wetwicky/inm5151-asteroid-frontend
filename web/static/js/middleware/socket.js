@@ -3,8 +3,6 @@
 import {Socket} from 'phoenix'
 import { connecting, connected, disconnect, disconnected, receiveHello } from '../actions'
 import { CONNECT, DISCONNECT, SEND_HELLO, RECEIVE_HELLO} from "../constants/index";
-import {CONNECT} from "../constants/index";
-import {RECEIVE_HELLO} from "../constants/index";
 
 const socketMiddleware = (function () {
     var socket = null

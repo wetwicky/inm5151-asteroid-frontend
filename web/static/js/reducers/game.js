@@ -1,17 +1,16 @@
 import {
-    CONNECT,
-    CONNECTING,
     CONNECTED,
-    DISCONNECT,
     DISCONNECTED,
     SET_NAME,
-    SEND_HELLO,
+    WINDOW_RESIZE,
     RECEIVE_HELLO
 } from '../constants'
 
 const game = (state = {
     gameStarted: false,
     name: '',
+    w: 1024,
+    h: 768,
     hellos: []
 }, action) => {
     switch (action.type) {
@@ -29,6 +28,11 @@ const game = (state = {
             return {
                 ...state,
                 name: action.name
+            }
+        case WINDOW_RESIZE:
+            return {
+                ...state,
+                ...action.payload
             }
         case RECEIVE_HELLO:
             return {
