@@ -8,6 +8,7 @@ export const SET_NAME = 'SET_NAME'
 
 // Canvas
 export const WINDOW_RESIZE = 'WINDOW_RESIZE'
+export const UPDATE = 'UPDATE'
 
 // TEST
 export const SEND_HELLO = 'SEND_HELLO'

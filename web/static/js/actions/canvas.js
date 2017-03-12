@@ -1,11 +1,15 @@
-import { WINDOW_RESIZE } from '../constants';
+import { WINDOW_RESIZE, UPDATE } from '../constants';
 
-export function windowResize({ width, height }) {
-    const w = width >= height ? 100 : width * 100 / height;
-    const h = height > width ? 100 : height * 100 / width;
-
+export function windowResize({ w, h }) {
     return {
         type: WINDOW_RESIZE,
-        payload: { width, height, w, h },
+        payload: { w, h },
+    };
+}
+
+export function update({ x, y, direction }) {
+    return {
+        type: UPDATE,
+        payload: { x: x, y: y, direction: direction },
     };
 }

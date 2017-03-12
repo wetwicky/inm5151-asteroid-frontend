@@ -9,8 +9,8 @@ import {
 const game = (state = {
     gameStarted: false,
     name: '',
-    w: 1024,
-    h: 768,
+    w: 0,
+    h: 0,
     hellos: []
 }, action) => {
     switch (action.type) {
@@ -30,6 +30,7 @@ const game = (state = {
                 name: action.name
             }
         case WINDOW_RESIZE:
+            console.log(action)
             return {
                 ...state,
                 ...action.payload
