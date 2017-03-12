@@ -20,7 +20,10 @@ class Map extends Component {
         const transform = `translate(${ w / 2 } ${ h / 2 }) rotate(${orientation} 15 16)`
         return (
             <Canvas { ...this.props }>
-                <path transform={ transform } width="30" height="32" strokeWidth="5" strokeMiterlimit="3" stroke="#FFFFFF" fill="#000000" d="M0,35 L15,0 L30,35 L27,32 L3,32 " strokeLinecap="round" strokeLinejoin="round" />
+                <path transform={ transform } width="30" height="32"
+                      strokeWidth="5" strokeMiterlimit="3" stroke="#FFFFFF"
+                      fill="#000000" d="M35,0 L0,15 L35,30 L32,27 L32,3"
+                      strokeLinecap="round" strokeLinejoin="round" />
             </Canvas>
         )
     }
@@ -37,6 +40,8 @@ class Map extends Component {
 Map.propTypes = {
     w: React.PropTypes.number,
     h: React.PropTypes.number,
+    x: React.PropTypes.number,
+    y: React.PropTypes.number,
     orientation: React.PropTypes.number,
     windowResize: React.PropTypes.func
 }
@@ -44,6 +49,8 @@ Map.propTypes = {
 const mapStateToProps = (state, ownProps) => ({
     w: state.game.w,
     h: state.game.h,
+    x: state.player.position.x,
+    y: state.player.position.y,
     orientation: state.player.speed.direction()
 })
 

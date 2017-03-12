@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Map from '../containers/map'
 
 class Game extends Component {
-    
+
     constructor(props) {
         super(props)
         
@@ -13,11 +13,13 @@ class Game extends Component {
     componentDidMount() {
         document.body.addEventListener('keydown', this.onKeyDown)
         document.body.addEventListener('keyup', this.onKeyUp)
+        this.interval = window.setInterval(this.props.update, 1000/60)
     }
 
     componentWillUnmount() {
         window.removeEventListener('keydown', this.onKeyDown)
         window.removeEventListener('keyup', this.onKeyUp)
+        window.clearInterval(this.interval)
     }
     
     onKeyDown(e) {
