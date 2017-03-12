@@ -12,7 +12,7 @@ defmodule Asteroidsio do
       supervisor(Asteroidsio.Endpoint, []),
       # Start your own worker by calling: Asteroidsio.Worker.start_link(arg1, arg2, arg3)
       # worker(Asteroidsio.Worker, [arg1, arg2, arg3]),
-      worker(Asteroidsio.Repo, [[host: "db", db: "asteroidio"]]),
+      worker(Asteroidsio.Repo, [[host: "db", db: "test"]]),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

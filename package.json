@@ -5,7 +5,9 @@
     "react-dom": "^15.4.2",
     "react-game-kit": "0.0.2",
     "react-redux": "^5.0.3",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "phoenix": "./deps/phoenix",
+    "phoenix_html": "./deps/phoenix_html"
   },
   "devDependencies": {
     "babel": "^6.23.0",

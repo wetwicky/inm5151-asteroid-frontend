@@ -12,6 +12,8 @@
 You might need to run these commands as root/administrator according to your setup.
 
 - Build the docker compose: `docker-compose build`
+- Run the docker compose: `docker-compose up`
+- Create the table by visiting [http://localhost:4000/init-table]()
 
 ## How to run
 

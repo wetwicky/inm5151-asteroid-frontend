@@ -9,7 +9,7 @@ services:
 
   backend:
     build: .
-    command: mix phoenix.server
+    command: ./start.sh
     environment:
       - LOGGY_STACKS=1
     volumes:
