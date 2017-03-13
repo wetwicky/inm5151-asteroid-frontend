@@ -6,7 +6,7 @@ defmodule Asteroidsio.UserSocket do
   channel "player:*", Asteroidsio.PlayerChannel
 
   ## Transports
-  transport :websocket, Phoenix.Transports.WebSocket
+  transport :websocket, Phoenix.Transports.WebSocket, timeout: 45_000
   # transport :longpoll, Phoenix.Transports.LongPoll
 
   # Socket params are passed from the client and can
@@ -44,4 +44,5 @@ defmodule Asteroidsio.UserSocket do
   # Returning `nil` makes this socket anonymous.
   #def id(_socket), do: nil
   def id(socket), do: "users_socket:#{socket.assigns.player_id}"
+
 end
