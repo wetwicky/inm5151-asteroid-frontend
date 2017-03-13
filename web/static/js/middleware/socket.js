@@ -3,7 +3,7 @@
 import {Socket} from 'phoenix'
 import { connecting, connected, disconnect, disconnected } from '../actions'
 import { updateOtherPlayer, playerLeft, getPlayers } from '../actions/player'
-import { CONNECT, DISCONNECT, UPDATE_OTHER_PLAYER, UPDATE_PLAYER, UPDATE, GET_PLAYERS, PLAYER_LEFT } from "../constants/index";
+import { CONNECT, DISCONNECT, UPDATE_OTHER_PLAYER, UPDATE_PLAYER, UPDATE, GET_PLAYERS, PLAYER_LEFT, FIRE } from "../constants/index";
 
 const socketMiddleware = (function () {
     var socket = null
@@ -120,7 +120,9 @@ const socketMiddleware = (function () {
             }
             case FIRE:
             {
-                
+               if (socket == null) {
+                    return
+               }
             }
 
             default:
