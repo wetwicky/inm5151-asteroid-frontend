@@ -45,7 +45,6 @@ const socketMiddleware = (function () {
                 store.dispatch(getPlayers(data))
                 break
             case PLAYER_LEFT:
-                console.warn(event)
                 store.dispatch(playerLeft(data.id))
                 break
             case undefined:

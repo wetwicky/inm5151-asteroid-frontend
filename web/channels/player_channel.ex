@@ -1,7 +1,7 @@
 defmodule Asteroidsio.PlayerChannel do
   use Phoenix.Channel
 
-  intercept ["UPDATE_OTHER_PLAYER"]
+  intercept ["UPDATE_OTHER_PLAYER", "GET_PLAYERS"]
 
   def broadcast_change(id, player) do
     playerWithId = Map.put(player, :id, id)
@@ -17,7 +17,8 @@ defmodule Asteroidsio.PlayerChannel do
 
   def handle_info(:after_join, socket) do
     IO.inspect Asteroidsio.Bucket.current()
-    push socket, "GET_PLAYERS", Asteroidsio.Bucket.current()
+    players = Map.drop(Asteroidsio.Bucket.current(), [socket.assigns.player_id])
+    push socket, "GET_PLAYERS", players
     {:noreply, socket}
   end
 
