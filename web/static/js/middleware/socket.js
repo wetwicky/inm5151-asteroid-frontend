@@ -14,7 +14,6 @@ const socketMiddleware = (function () {
         channel.join()
             .receive('ok', resp => {
                 // Tell the store we are connected
-                console.log("Ok: ", resp)
                 store.dispatch(connected())
             })
             .receive('error', resp => {

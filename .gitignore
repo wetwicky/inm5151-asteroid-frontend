@@ -47,3 +47,6 @@ priv/static/css/app.css.map
 
 # deps pheonix
 deps
+
+# Compiled assets
+priv
