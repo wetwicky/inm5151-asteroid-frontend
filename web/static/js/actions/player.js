@@ -1,4 +1,4 @@
-import { UPDATE, UPDATE_OTHER_PLAYER } from '../constants';
+import { UPDATE, UPDATE_OTHER_PLAYER, GET_PLAYERS, PLAYER_LEFT } from '../constants';
 
 export function update() {
     return {
@@ -10,6 +10,20 @@ export function updateOtherPlayer(payload) {
     return {
         type: UPDATE_OTHER_PLAYER,
         payload: payload
+    }
+}
+
+export function getPlayers(payload) {
+    return {
+        type: GET_PLAYERS,
+        payload: payload
+    }
+}
+
+export function playerLeft(id) {
+    return {
+        type: PLAYER_LEFT,
+        payload: id
     }
 }
 

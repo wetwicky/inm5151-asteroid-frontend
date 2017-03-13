@@ -8,24 +8,21 @@ defmodule Asteroidsio.PlayerChannel do
     Asteroidsio.Endpoint.broadcast("player:default", "UPDATE_OTHER_PLAYER", playerWithId)
   end
 
-  def broadcast_delete(player) do
-    Asteroidsio.Endpoint.broadcast("player:default", "DELETE_PLAYER", player)
-  end
-
   def join("player:default", _message, socket) do
     send(self, :after_join)
+    :ok = ChannelWatcher.monitor(:player, self(), {__MODULE__, :leave, ["default", socket.assigns.player_id]})
+
     {:ok, socket}
   end
 
   def handle_info(:after_join, socket) do
-    #push socket, "This is a test", %{}
+    IO.inspect Asteroidsio.Bucket.current()
+    push socket, "GET_PLAYERS", Asteroidsio.Bucket.current()
     {:noreply, socket}
   end
 
   def handle_in("UPDATE_PLAYER", payload, socket) do
-    IO.puts "Update_player"
     player = Asteroidsio.Bucket.merge(socket.assigns.player_id, payload)
-    IO.inspect player
     broadcast_change(socket.assigns.player_id, player)
 
     {:noreply, socket}
@@ -39,9 +36,8 @@ defmodule Asteroidsio.PlayerChannel do
     {:noreply, socket}
   end
 
-  def leave(socket, topic) do
-      IO.puts "SOMEBODY LEAVING"
-      broadcast socket, "user:left", %{ "content" => "somebody is leaving" }
-      {:ok, socket}
+  def leave(room_id, player_id) do
+    Asteroidsio.Bucket.delete(player_id)
+    Asteroidsio.Endpoint.broadcast("player:default", "PLAYER_LEFT", %{ "id" => player_id })
   end
 end

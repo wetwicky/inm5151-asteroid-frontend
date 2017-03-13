@@ -3,7 +3,9 @@ import {
     DISCONNECTED,
     SET_NAME,
     WINDOW_RESIZE,
-    UPDATE_OTHER_PLAYER
+    UPDATE_OTHER_PLAYER,
+    PLAYER_LEFT,
+    GET_PLAYERS
 } from '../constants'
 
 const game = (state = {
@@ -35,15 +37,35 @@ const game = (state = {
                 ...action.payload
             }
         case UPDATE_OTHER_PLAYER:
+        {
             let players = {
                 ...state.players,
                 [action.payload.id]: action.payload
             }
-            let newState = {
+            return {
                 ...state,
                 players: players
             }
-            return newState
+        }
+        case GET_PLAYERS:
+        {
+            return {
+                ...state,
+                players: action.payload
+            }
+        }
+        case PLAYER_LEFT:
+        {
+            console.warn(state.players)
+            let players = {
+                ...state.players
+            }
+            delete players[action.payload]
+            return {
+                ...state,
+                players: players
+            }
+        }
         default:
             return state
     }

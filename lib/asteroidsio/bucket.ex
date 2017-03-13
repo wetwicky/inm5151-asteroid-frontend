@@ -3,7 +3,7 @@ defmodule Asteroidsio.Bucket do
   Starts a new bucket.
   """
   def start_link do
-    Agent.start_link(fn -> %{:id => 0} end, name: :bucket)
+    Agent.start_link(fn -> %{:id => "0"} end, name: :bucket)
   end
 
   @doc """
@@ -13,7 +13,7 @@ defmodule Asteroidsio.Bucket do
   def add(value) do
     Agent.get_and_update(:bucket, fn dict ->
       {dict.id,
-       Map.put(Map.put(dict, :id, dict.id + 1), dict.id, value)}
+       Map.put(Map.put(dict, :id, Integer.to_string(String.to_integer(dict.id) + 1)), dict.id, value)}
     end)
   end
 

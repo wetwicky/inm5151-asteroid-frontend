@@ -2,8 +2,8 @@
 
 import {Socket} from 'phoenix'
 import { connecting, connected, disconnect, disconnected } from '../actions'
-import { updateOtherPlayer } from '../actions/player'
-import { CONNECT, DISCONNECT, UPDATE_OTHER_PLAYER, UPDATE_PLAYER, UPDATE} from "../constants/index";
+import { updateOtherPlayer, playerLeft, getPlayers } from '../actions/player'
+import { CONNECT, DISCONNECT, UPDATE_OTHER_PLAYER, UPDATE_PLAYER, UPDATE, GET_PLAYERS, PLAYER_LEFT } from "../constants/index";
 
 const socketMiddleware = (function () {
     var socket = null
@@ -39,8 +39,14 @@ const socketMiddleware = (function () {
         var data = event.payload
         switch (type) {
             case UPDATE_OTHER_PLAYER:
-                console.log(`${data.name}:\t${data.x},${data.y} ${data.direction}deg!`)
                 store.dispatch(updateOtherPlayer(data))
+                break
+            case GET_PLAYERS:
+                store.dispatch(getPlayers(data))
+                break
+            case PLAYER_LEFT:
+                console.warn(event)
+                store.dispatch(playerLeft(data.id))
                 break
             case undefined:
             case 'phx_close':
