@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { update, updateLeft, updateRight, updateUp } from '../actions/player'
+import { update, updateLeft, updateRight, updateUp, fire } from '../actions/player'
 import GameComponent from '../components/game'
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -13,6 +13,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     upPressed: () => {
         dispatch(updateUp(true))
     },
+    spacePressed: () => {
+        // Nothing for now
+    },
     leftReleased: () => {
         dispatch(updateLeft(false))
     },
@@ -21,6 +24,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     upReleased: () => {
         dispatch(updateUp(false))
+    },
+    spaceReleased: () => {
+        dispatch(fire())
+        console.log("fire")
     },
     update: () => {
         dispatch(update())

@@ -1,4 +1,4 @@
-import { UPDATE, UPDATE_OTHER_PLAYER, GET_PLAYERS, PLAYER_LEFT } from '../constants';
+import { UPDATE, UPDATE_OTHER_PLAYER, GET_PLAYERS, PLAYER_LEFT, FIRE } from '../constants';
 
 export function update() {
     return {
@@ -45,5 +45,12 @@ export function updateUp(activated) {
     return {
         type: UPDATE,
         payload: {up: activated},
+    }
+}
+
+export function fire(id) {
+    return {
+        type: FIRE,
+        payload: id
     }
 }

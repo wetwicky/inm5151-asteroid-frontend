@@ -29,6 +29,8 @@ class Game extends Component {
             this.props.upPressed()
         } else if (e.keyCode == 39) { // Right
             this.props.rightPressed()
+        } else if (e.keyCode == 32) { // Space
+            this.props.spacePressed()
         }
     }
 
@@ -39,7 +41,10 @@ class Game extends Component {
             this.props.upReleased()
         } else if (e.keyCode == 39) { // Right
             this.props.rightReleased()
+        } else if (e.keyCode == 32) { // Space
+            this.props.spaceReleased()
         }
+
     }
 
     render() {

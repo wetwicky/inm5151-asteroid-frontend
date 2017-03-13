@@ -118,6 +118,10 @@ const socketMiddleware = (function () {
                 
                 return next(action)
             }
+            case FIRE:
+            {
+                
+            }
 
             default:
                 return next(action)
