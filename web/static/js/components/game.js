@@ -13,7 +13,7 @@ class Game extends Component {
     componentDidMount() {
         document.body.addEventListener('keydown', this.onKeyDown)
         document.body.addEventListener('keyup', this.onKeyUp)
-        this.interval = window.setInterval(this.props.update, 1000/60)
+        this.interval = window.setInterval(this.props.update, 1000/30)
     }
 
     componentWillUnmount() {
@@ -23,8 +23,6 @@ class Game extends Component {
     }
     
     onKeyDown(e) {
-        console.log(this)
-        console.log(this.props)
         if (e.keyCode == 37) { // Left
             this.props.leftPressed()
         } else if (e.keyCode == 38) { // Up

@@ -1,6 +1,6 @@
 defmodule Asteroidsio.UserSocket do
   use Phoenix.Socket
-  import RethinkDB.Query
+  import Asteroidsio.Bucket
 
   ## Channels
   channel "player:*", Asteroidsio.PlayerChannel
@@ -21,11 +21,15 @@ defmodule Asteroidsio.UserSocket do
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
   def connect(params, socket) do
-    results = table("players")
-    |> insert(%{"name" => params["name"]})
-    |> Asteroidsio.Repo.run
-    userId = hd(results.data["generated_keys"])
-    {:ok, assign(socket, :user_id, userId)}
+    player_id = add(%{
+        "name" => params["name"],
+        "x" => 0,
+        "y" => 0,
+        "direction" => 90
+    })
+    IO.inspect player_id
+
+    {:ok, assign(socket, :player_id, player_id)}
   end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
@@ -39,5 +43,5 @@ defmodule Asteroidsio.UserSocket do
   #
   # Returning `nil` makes this socket anonymous.
   #def id(_socket), do: nil
-  def id(socket), do: "users_socket:#{socket.assigns.user_id}"
+  def id(socket), do: "users_socket:#{socket.assigns.player_id}"
 end

@@ -1,20 +1,20 @@
 "use strict";
 
 import {Socket} from 'phoenix'
-import { connecting, connected, disconnect, disconnected, receiveHello } from '../actions'
-import { CONNECT, DISCONNECT, SEND_HELLO, RECEIVE_HELLO} from "../constants/index";
+import { connecting, connected, disconnect, disconnected } from '../actions'
+import { updateOtherPlayer } from '../actions/player'
+import { CONNECT, DISCONNECT, UPDATE_OTHER_PLAYER, UPDATE_PLAYER, UPDATE} from "../constants/index";
 
 const socketMiddleware = (function () {
     var socket = null
     var channel = null
 
     const onOpen = (ws, store, username) => event => {
-        // TODO Connect with server
         channel = socket.channel("player:default", {});
         channel.join()
             .receive('ok', resp => {
-                console.log(resp)
                 // Tell the store we are connected
+                console.log("Ok: ", resp)
                 store.dispatch(connected())
             })
             .receive('error', resp => {
@@ -29,20 +29,28 @@ const socketMiddleware = (function () {
 
     const onClose = (ws, store) => event => {
         // Tell the store we are disconnected
+        console.warn("Channel closed")
         store.dispatch(disconnected())
     }
 
     const onMessage = (ws, store) => event => {
         // Parse the JSON message received on the websocket
-        var msg = event.payload
-        switch (msg.type) {
-            case RECEIVE_HELLO:
-                store.dispatch(receiveHello(msg))
+        var type = event.event
+        var data = event.payload
+        switch (type) {
+            case UPDATE_OTHER_PLAYER:
+                console.log(`${data.name}:\t${data.x},${data.y} ${data.direction}deg!`)
+                store.dispatch(updateOtherPlayer(data))
                 break
             case undefined:
+            case 'phx_close':
+            case 'phx_reply':
+                break
+            case 'phx_error':
+                console.error(event)
                 break
             default:
-                console.log('Received unknown message type: "' + msg.type + '+')
+                console.log('Received unknown message type: "' + type + '"')
                 break
         }
     }
@@ -89,13 +97,21 @@ const socketMiddleware = (function () {
                 break;
             }
 
-            case SEND_HELLO:
+            case UPDATE:
             {
                 if (socket == null) {
                     return
                 }
-
-                channel.push(SEND_HELLO)
+                
+                let player = store.getState().player
+                let payload = {
+                    x: player.position.x,
+                    y: player.position.y,
+                    direction: player.speed.direction()
+                }
+                channel.push(UPDATE_PLAYER, payload)
+                
+                return next(action)
             }
 
             default:

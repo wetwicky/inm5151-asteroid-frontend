@@ -9,8 +9,6 @@ class Canvas extends Component {
 
     componentDidUpdate() {
         let { x, y } = this.props
-        console.log(this)
-        console.log(this.props)
         this.svg.style.backgroundPositionX = `${x}px`
         this.svg.style.backgroundPositionY = `${y}px`
     }

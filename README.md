@@ -29,9 +29,8 @@ You might need to run these commands as root/administrator according to your set
 
 ## Development
 
-There is three main components in this project:
+There is two main components in this project:
 
-- [RethinkDB](https://www.rethinkdb.com/): The database
 - [Phoenix](http://www.phoenixframework.org/): The backend framework coded in [Elixir](http://elixir-lang.org/)
 - [React](https://facebook.github.io/react/): The frontend built in ES6 with React
 
@@ -56,9 +55,4 @@ The backend is in Phoenix, built in Elixir, a language that run on the Erlang Vi
 
 The packages are managed with the [hex package manager](https://hex.pm/), a classic for Erlang compatible environment.
 
-The backend will leverage the connection to the database with the [RethinkDB for Elixir](https://github.com/hamiltop/rethinkdb-elixir) library instead of the traditionnal [Ecto](https://github.com/elixir-ecto/ecto).
-
-### Database
-
-The database is a no-sql document database built for soft real-time storage. The main functionnality that will be used in this project is the **live queries**. There is nothing persisted, which mean that the database can be held in memory, without any kind of backup.
-
+The backend keep all the information in memory with a map to accelerate the treatment of information.

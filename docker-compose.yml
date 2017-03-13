@@ -1,12 +1,6 @@
 version: '3'
 
 services:
-  db:
-    image: rethinkdb
-    ports:
-      - "8080:8080"
-      - 28015
-
   backend:
     build: .
     command: ./start.sh
@@ -16,5 +10,3 @@ services:
       - .:/app
     ports:
       - "4000:4000"
-    depends_on:
-      - db

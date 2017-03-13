@@ -1,8 +1,15 @@
-import { UPDATE } from '../constants';
+import { UPDATE, UPDATE_OTHER_PLAYER } from '../constants';
 
 export function update() {
     return {
         type: UPDATE
+    }
+}
+
+export function updateOtherPlayer(payload) {
+    return {
+        type: UPDATE_OTHER_PLAYER,
+        payload: payload
     }
 }
 
