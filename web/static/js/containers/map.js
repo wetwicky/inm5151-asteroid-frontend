@@ -9,21 +9,17 @@ class Map extends Component {
         window.addEventListener('resize', this.handleResize)
         setTimeout(() => this.handleResize(), 300)
     }
-    
+
     componentWillUnmount() {
         window.removeEventListener('resize', this.handleResize)
     }
-    
+
     render() {
         const { w, h, x, y, orientation, name, players } = this.props
         const transform = `translate(${ w / 2 } ${ h / 2 }) rotate(${orientation} 15 16)`
         //console.log(`${name}:\t${x},${y} ${orientation}deg!`)
         return (
             <Canvas { ...this.props }>
-                <path transform={ transform } width="30" height="32"
-                      strokeWidth="5" strokeMiterlimit="3" stroke="#FFFFFF"
-                      fill="#000000" d="M35,0 L0,15 L35,30 L32,27 L32,3"
-                      strokeLinecap="round" strokeLinejoin="round" />
                 {
                     Object.keys(players).map((pk, idx) => {
                         let p = players[pk]
@@ -37,10 +33,14 @@ class Map extends Component {
                         )
                     })
                 }
+                <path transform={ transform } width="30" height="32"
+                      strokeWidth="5" strokeMiterlimit="3" stroke="#FFFFFF"
+                      fill="#000000" d="M35,0 L0,15 L35,30 L32,27 L32,3"
+                      strokeLinecap="round" strokeLinejoin="round" />
             </Canvas>
         )
     }
-    
+
     handleResize = () => {
         this.props.windowResize({
             w: window.innerWidth,
