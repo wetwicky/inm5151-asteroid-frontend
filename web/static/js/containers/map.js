@@ -9,11 +9,11 @@ class Map extends Component {
         window.addEventListener('resize', this.handleResize)
         setTimeout(() => this.handleResize(), 300)
     }
-    
+
     componentWillUnmount() {
         window.removeEventListener('resize', this.handleResize)
     }
-    
+
     render() {
         const { w, h, playerId, name, players } = this.props
         const player = players[playerId]
@@ -54,7 +54,7 @@ class Map extends Component {
             </Canvas>
         )
     }
-    
+
     handleResize = () => {
         this.props.windowResize({
             w: window.innerWidth,
