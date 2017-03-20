@@ -22,12 +22,13 @@ defmodule Asteroidsio.UserSocket do
   # performing token verification on connect.
   def connect(params, socket) do
     player_id = add(%{
-        "name" => params["name"],
-        "x" => 0,
-        "y" => 0,
-        "direction" => 90
+        :type => :player,
+        :name => params["name"],
+        :x => 0,
+        :y => 0,
+        :direction => 90,
+        :last_update => nil
     })
-    IO.inspect player_id
 
     {:ok, assign(socket, :player_id, player_id)}
   end

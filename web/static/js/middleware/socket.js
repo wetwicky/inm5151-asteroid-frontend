@@ -2,8 +2,8 @@
 
 import {Socket} from 'phoenix'
 import { connecting, connected, disconnect, disconnected } from '../actions'
-import { updateOtherPlayer, playerLeft, getPlayers } from '../actions/player'
-import { CONNECT, DISCONNECT, UPDATE_OTHER_PLAYER, UPDATE_PLAYER, UPDATE, GET_PLAYERS, PLAYER_LEFT, FIRE } from "../constants/index";
+import { updateEntities, playerLeft, getPlayers, receivePlayerId } from '../actions/player'
+import { RECEIVE_PLAYER_ID, CONNECT, DISCONNECT, UPDATE_ENTITIES, UPDATE_PLAYER, UPDATE, GET_PLAYERS, PLAYER_LEFT, FIRE } from "../constants/index";
 
 const socketMiddleware = (function () {
     var socket = null
@@ -37,8 +37,11 @@ const socketMiddleware = (function () {
         var type = event.event
         var data = event.payload
         switch (type) {
-            case UPDATE_OTHER_PLAYER:
-                store.dispatch(updateOtherPlayer(data))
+            case UPDATE_ENTITIES:
+                store.dispatch(updateEntities(data))
+                break
+            case RECEIVE_PLAYER_ID:
+                store.dispatch(receivePlayerId(data.id))
                 break
             case GET_PLAYERS:
                 store.dispatch(getPlayers(data))
@@ -103,19 +106,22 @@ const socketMiddleware = (function () {
 
             case UPDATE:
             {
+                let result = next(action)
+                
                 if (socket == null) {
                     return
                 }
                 
                 let player = store.getState().player
                 let payload = {
-                    x: player.position.x,
-                    y: player.position.y,
-                    direction: player.speed.direction()
+                    up_pressed: player.up_pressed,
+                    left_pressed: player.left_pressed,
+                    right_pressed: player.right_pressed,
+                    fire_pressed: player.fire_pressed,
                 }
                 channel.push(UPDATE_PLAYER, payload)
                 
-                return next(action)
+                return result
             }
             case FIRE:
             {

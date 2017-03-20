@@ -15,28 +15,42 @@ class Map extends Component {
     }
     
     render() {
-        const { w, h, x, y, orientation, name, players } = this.props
-        const transform = `translate(${ w / 2 } ${ h / 2 }) rotate(${orientation} 15 16)`
-        //console.log(`${name}:\t${x},${y} ${orientation}deg!`)
+        const { w, h, playerId, name, players } = this.props
+        const player = players[playerId]
+        if (player == null) return null
+        
+        const transform = `translate(${ w / 2 } ${ h / 2 }) rotate(${player.direction} 15 16)`
+        
         return (
             <Canvas { ...this.props }>
-                <path transform={ transform } width="30" height="32"
-                      strokeWidth="5" strokeMiterlimit="3" stroke="#FFFFFF"
-                      fill="#000000" d="M35,0 L0,15 L35,30 L32,27 L32,3"
-                      strokeLinecap="round" strokeLinejoin="round" />
                 {
                     Object.keys(players).map((pk, idx) => {
+                        if (pk == playerId) return;
                         let p = players[pk]
-                        let pt = `translate(${ w / 2 + (x - p.x) } ${ h / 2 + (y - p.y) }) rotate(${p.direction} 15 16)`
-                        //console.log(`${p.name}:\t${p.x},${p.y} ${p.direction}deg`)
+                        let pt = `translate(${ w / 2 + (player.x - p.x) } ${ h / 2 + (player.y - p.y) }) rotate(${p.direction} 15 16)`
                         return (
-                            <path transform={ pt } width="30" height="32"
-                                  strokeWidth="5" strokeMiterlimit="3" stroke="#FF8844"
-                                  fill="#000000" d="M35,0 L0,15 L35,30 L32,27 L32,3"
-                                  strokeLinecap="round" strokeLinejoin="round" />
+                            <g>
+                                <path transform={ pt } width="30" height="32"
+                                      strokeWidth="5" strokeMiterlimit="3" stroke="#FF8844"
+                                      fill="#000000" d="M35,0 L0,15 L35,30 L32,27 L32,3"
+                                      strokeLinecap="round" strokeLinejoin="round" />
+                                <text x={ w / 2 + (player.x - p.x) } y={ h / 2 + (player.y - p.y + 60) } fontFamily="Verdana" fontSize="15" fill="#FF8844" fillOpacity="0.4">
+                                    { p.name }
+                                </text>
+                            </g>
                         )
                     })
                 }
+                
+                <g>
+                    <path transform={ transform } width="30" height="32"
+                          strokeWidth="5" strokeMiterlimit="3" stroke="#ffffff"
+                          fill="#000000" d="M35,0 L0,15 L35,30 L32,27 L32,3"
+                          strokeLinecap="round" strokeLinejoin="round" />
+                    <text x={ w / 2 } y={ h / 2 + 60 } fontFamily="Verdana" fontSize="15" fill="#ffffff"  fillOpacity="0.4">
+                        { player.name }
+                    </text>
+                </g>
             </Canvas>
         )
     }
@@ -53,22 +67,18 @@ class Map extends Component {
 Map.propTypes = {
     w: React.PropTypes.number,
     h: React.PropTypes.number,
-    x: React.PropTypes.number,
-    y: React.PropTypes.number,
+    playerId: React.PropTypes.string,
     name: React.PropTypes.string,
-    orientation: React.PropTypes.number,
-    players: React.PropTypes.array,
+    players: React.PropTypes.object,
     windowResize: React.PropTypes.func
 }
 
 const mapStateToProps = (state, ownProps) => ({
     w: state.game.w,
     h: state.game.h,
-    x: state.player.position.x,
-    y: state.player.position.y,
+    playerId: state.player.id,
     name: state.game.name,
     players: state.game.players,
-    orientation: state.player.speed.direction()
 })
 
 const mapDispatchToProps = (dispatch) => ({

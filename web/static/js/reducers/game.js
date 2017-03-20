@@ -3,7 +3,7 @@ import {
     DISCONNECTED,
     SET_NAME,
     WINDOW_RESIZE,
-    UPDATE_OTHER_PLAYER,
+    UPDATE_ENTITIES,
     PLAYER_LEFT,
     GET_PLAYERS
 } from '../constants'
@@ -13,7 +13,7 @@ const game = (state = {
     name: '',
     w: 0,
     h: 0,
-    players: []
+    players: {}
 }, action) => {
     switch (action.type) {
         case CONNECTED:
@@ -36,12 +36,9 @@ const game = (state = {
                 ...state,
                 ...action.payload
             }
-        case UPDATE_OTHER_PLAYER:
+        case UPDATE_ENTITIES:
         {
-            let players = {
-                ...state.players,
-                [action.payload.id]: action.payload
-            }
+            let players = action.payload.players
             return {
                 ...state,
                 players: players

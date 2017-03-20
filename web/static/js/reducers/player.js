@@ -1,54 +1,26 @@
-import { UPDATE, BASE_SPEED, BASE_ROTATION_SPEED } from '../constants'
-import Vec2 from '../util/vec2d'
-
-window.speedMomentum = 0
-window.rotationMomentum = 90
-
-window.position = new Vec2(0, 0)
-window.speed = new Vec2.fromDirection(90, 1)
+import { UPDATE, BASE_SPEED, BASE_ROTATION_SPEED, RECEIVE_PLAYER_ID } from '../constants'
 
 const player = (state = {
-    position: new Vec2(0, 0),
-    speed: new Vec2.fromDirection(90, 1),
     left: false,
     right: false,
     up: false,
-    lastUpdate: null
+    lastUpdate: null,
+    id: null
 }, action) => {
     switch (action.type) {
         case UPDATE:
             let newState = {
                 ...state,
-                ...action.payload,
-                lastUpdate: new Date().getTime()
+                ...action.payload
             }
 
-            let delta = 0
-            if (state.lastUpdate != null) {
-                delta = newState.lastUpdate - state.lastUpdate
-            }
-            let deltaPercent = delta / (1000 / 60)
-            
-            let rotation = 0
-            let thrusters = 0
-            
-            if (newState.left) {
-                rotation -= 1
-            }
-            if (newState.right) {
-                rotation += 1
-            }
-            if (newState.up) {
-                thrusters = 1
-            }
-            
-            let newDirection = newState.speed.direction() +
-                rotation * BASE_ROTATION_SPEED * deltaPercent
-            newState.speed.setDirection(newDirection)
-            let speedFactor = thrusters * BASE_SPEED * deltaPercent
-            newState.position.addScaled(newState.speed, speedFactor)
-            
             return newState
+        
+        case RECEIVE_PLAYER_ID:
+            return {
+                ...state,
+                id: action.payload
+            }
         default:
             return state
     }

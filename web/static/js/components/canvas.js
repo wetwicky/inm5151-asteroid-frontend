@@ -8,7 +8,10 @@ import React, { Component } from 'react';
 class Canvas extends Component {
 
     componentDidUpdate() {
-        let { x, y } = this.props
+        let { playerId, players } = this.props
+        let player = players[playerId]
+        let x = player.x
+        let y = player.y
         this.svg.style.backgroundPositionX = `${x}px`
         this.svg.style.backgroundPositionY = `${y}px`
     }

@@ -1,4 +1,4 @@
-defmodule ChannelWatcher do
+defmodule Asteroidsio.ChannelWatcher do
   use GenServer
 
   ## Client API

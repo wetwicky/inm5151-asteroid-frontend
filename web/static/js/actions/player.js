@@ -1,4 +1,4 @@
-import { UPDATE, UPDATE_OTHER_PLAYER, GET_PLAYERS, PLAYER_LEFT, FIRE } from '../constants';
+import { UPDATE, UPDATE_ENTITIES, GET_PLAYERS, PLAYER_LEFT, FIRE, RECEIVE_PLAYER_ID } from '../constants';
 
 export function update() {
     return {
@@ -6,9 +6,9 @@ export function update() {
     }
 }
 
-export function updateOtherPlayer(payload) {
+export function updateEntities(payload) {
     return {
-        type: UPDATE_OTHER_PLAYER,
+        type: UPDATE_ENTITIES,
         payload: payload
     }
 }
@@ -30,27 +30,34 @@ export function playerLeft(id) {
 export function updateLeft(activated) {
     return {
         type: UPDATE,
-        payload: {left: activated},
+        payload: {left_pressed: activated},
     }
 }
 
 export function updateRight(activated) {
     return {
         type: UPDATE,
-        payload: {right: activated},
+        payload: {right_pressed: activated},
     }
 }
 
 export function updateUp(activated) {
     return {
         type: UPDATE,
-        payload: {up: activated},
+        payload: {up_pressed: activated},
     }
 }
 
-export function fire(id) {
+export function firePressed(activated) {
     return {
-        type: FIRE,
-        payload: id
+        type: UPDATE,
+        payload: {fire_pressed: activated}
+    }
+}
+
+export function receivePlayerId(playerId) {
+    return {
+        type: RECEIVE_PLAYER_ID,
+        payload: playerId
     }
 }

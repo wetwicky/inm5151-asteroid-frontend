@@ -32,6 +32,16 @@ defmodule Asteroidsio.Bucket do
   end
 
   @doc """
+  Update all values of the map with a function.
+  """
+  def update_all(f) do
+    Agent.get_and_update(:bucket, fn dict ->
+      result = for {k, v} <- dict, into: %{}, do: f.({k, v})
+      {result, result}
+    end)
+  end
+
+  @doc """
   Check if a `key` is present in the `bucket`.
   """
   def has_key?(key) do
@@ -52,7 +62,8 @@ defmodule Asteroidsio.Bucket do
   """
   def merge(key, value) do
     Agent.get_and_update(:bucket, fn dict ->
-      result = Map.merge(dict[key], value)
+      content = Map.get(dict, key, %{})
+      result = Map.merge(content, value)
       {result,
        Map.put(dict, key, result)}
     end)
