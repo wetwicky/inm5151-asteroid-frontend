@@ -24,8 +24,8 @@ defmodule Asteroidsio.GameLoop do
         deltaPercent = delta / (1000 / 60)
 
         newDir = dir
-        newDir = if left_pressed, do: newDir - 100 * deltaPercent * :math.pi / 180, else: newDir
-        newDir = if right_pressed, do: newDir + 100 * deltaPercent * :math.pi / 180, else: newDir
+        newDir = if left_pressed, do: newDir - 250 * deltaPercent * :math.pi / 180, else: newDir
+        newDir = if right_pressed, do: newDir + 250 * deltaPercent * :math.pi / 180, else: newDir
 
         speed = if up_pressed, do: 5 * deltaPercent, else: 0
 
