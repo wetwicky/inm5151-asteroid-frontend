@@ -23,7 +23,8 @@ let Login = ({name, onSubmitDispatch, setNameDispatch}) => {
                         setNameDispatch(e.target.value)
                     }}
                     autoFocus
-                    value={name}/>
+                    value={name}
+                    maxLength="15"/>
                 <button type="submit">
                     Play!
                 </button>

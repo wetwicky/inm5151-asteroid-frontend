@@ -34,7 +34,9 @@ class Map extends Component {
                                       strokeWidth="5" strokeMiterlimit="3" stroke="#FF8844"
                                       fill="#000000" d="M35,0 L0,15 L35,30 L32,27 L32,3"
                                       strokeLinecap="round" strokeLinejoin="round" />
-                                <text x={ w / 2 + (player.x - p.x) } y={ h / 2 + (player.y - p.y + 60) } fontFamily="Verdana" fontSize="15" fill="#FF8844" fillOpacity="0.4">
+                                <text x={ w / 2 + (player.x - p.x) + 15 } y={ h / 2 + (player.y - p.y + 60) }
+                                      fontFamily="Verdana" fontSize="15" fill="#FF8844" fillOpacity="0.4"
+                                      textAnchor="middle">
                                     { p.name }
                                 </text>
                             </g>
@@ -47,7 +49,8 @@ class Map extends Component {
                           strokeWidth="5" strokeMiterlimit="3" stroke="#ffffff"
                           fill="#000000" d="M35,0 L0,15 L35,30 L32,27 L32,3"
                           strokeLinecap="round" strokeLinejoin="round" />
-                    <text x={ w / 2 } y={ h / 2 + 60 } fontFamily="Verdana" fontSize="15" fill="#ffffff"  fillOpacity="0.4">
+                    <text x={ w / 2 + 15 } y={ h / 2 + 60 } fontFamily="Verdana" fontSize="15" fill="#ffffff"
+                          fillOpacity="0.4" textAnchor="middle">
                         { player.name }
                     </text>
                 </g>

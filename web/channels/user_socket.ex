@@ -23,7 +23,7 @@ defmodule Asteroidsio.UserSocket do
   def connect(params, socket) do
     player_id = add(%{
         :type => :player,
-        :name => params["name"],
+        :name => params["name"] |> String.slice(0,15),
         :x => 0,
         :y => 0,
         :direction => 90,
