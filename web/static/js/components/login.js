@@ -5,7 +5,7 @@ let Login = ({name, onSubmitDispatch, setNameDispatch}) => {
 
     return (
         <div className="login">
-            <h1>Asteroid.io</h1>
+            <h1>Asteroids.io</h1>
             <form onSubmit={e => {
                 e.preventDefault()
 
