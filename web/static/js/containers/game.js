@@ -14,7 +14,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(updateUp(true))
     },
     spacePressed: () => {
-        // Nothing for now
+        dispatch(firePressed(true))
     },
     leftReleased: () => {
         dispatch(updateLeft(false))
@@ -26,8 +26,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(updateUp(false))
     },
     spaceReleased: () => {
-        dispatch(firePressed())
-        console.log("fire")
+        dispatch(firePressed(false))
     },
     update: () => {
         dispatch(update())

@@ -30,6 +30,15 @@ class Map extends Component {
                         let pt = `translate(${ w / 2 + (player.x - p.x) } ${ h / 2 + (player.y - p.y) }) rotate(${p.direction} 15 16)`
                         return (
                             <g>
+                                {
+                                    Object.keys(p.bullets).map((key, idx) => {
+                                        let bullet = p.bullets[key]
+                                        return (
+                                            <rect x={ w / 2 + (player.x - bullet.x) } y={ h / 2 + (player.y - bullet.y) }
+                                                  width="4" height="4" style={{ fill: "#FF8844" }} />
+                                        )
+                                    })
+                                }
                                 <path transform={ pt } width="30" height="32"
                                       strokeWidth="5" strokeMiterlimit="3" stroke="#FF8844"
                                       fill="#000000" d="M35,0 L0,15 L35,30 L32,27 L32,3"
@@ -45,14 +54,24 @@ class Map extends Component {
                 }
                 
                 <g>
+                    {
+                        Object.keys(player.bullets).map((key, idx) => {
+                            let bullet = player.bullets[key]
+                            return (
+                                <rect x={ w / 2 + (player.x - bullet.x) } y={ h / 2 + (player.y - bullet.y) }
+                                      width="4" height="4" style={{ fill: "#FFFFFF" }} /> 
+                            )
+                        })
+                    }
                     <path transform={ transform } width="30" height="32"
-                          strokeWidth="5" strokeMiterlimit="3" stroke="#ffffff"
+                          strokeWidth="5" strokeMiterlimit="3" stroke="#FFFFFF"
                           fill="#000000" d="M35,0 L0,15 L35,30 L32,27 L32,3"
                           strokeLinecap="round" strokeLinejoin="round" />
-                    <text x={ w / 2 + 15 } y={ h / 2 + 60 } fontFamily="Verdana" fontSize="15" fill="#ffffff"
+                    <text x={ w / 2 + 15 } y={ h / 2 + 60 } fontFamily="Verdana" fontSize="15" fill="#FFFFFF"
                           fillOpacity="0.4" textAnchor="middle">
                         { player.name }
                     </text>
+                })
                 </g>
             </Canvas>
         )

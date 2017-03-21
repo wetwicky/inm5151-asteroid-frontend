@@ -4,6 +4,41 @@ defmodule Asteroidsio.GameLoop do
 
   ## Client API
 
+  def update_bullet(bullet) do
+    IO.puts "HERE =============================="
+    IO.inspect bullet
+    %{:x => x,
+      :y => y,
+      :speed => speed,
+      :direction => dir,
+      :last_update => last_update,
+      :created_at => created_at} = bullet
+
+    now = :os.system_time(:milli_seconds)
+
+    if now - created_at <= 1500 do
+      delta = if last_update != nil, do: now - last_update, else: 0
+      deltaPercent = delta / (1000 / 60)
+
+      speedRatio = speed * deltaPercent
+
+      sx = speedRatio * :math.cos(dir / 360 * :math.pi * 2);
+      sy = speedRatio * :math.sin(dir / 360 * :math.pi * 2);
+      speedVector = Graphmath.Vec2.create(sx, sy)
+
+      { newX, newY } = Graphmath.Vec2.create(x, y) |> Graphmath.Vec2.add(speedVector)
+      %{bullet | :x => newX,
+                 :y => newY,
+                 :last_update => now }
+    else
+      nil
+    end
+  end
+
+  def update_bullets(bullets) do
+    Enum.map(bullets, &update_bullet/1) |> Enum.filter(fn v -> v != nil end)
+  end
+
   def tick({k, v}) do
     case {k, v} do
       {:id, _} ->
@@ -16,7 +51,9 @@ defmodule Asteroidsio.GameLoop do
              :left_pressed => left_pressed,
              :right_pressed => right_pressed,
              :fire_pressed => fire_pressed,
+             :last_time_fired => last_time_fired,
              :last_update => last_update,
+             :bullets => bullets
              }} ->
 
         now = :os.system_time(:milli_seconds)
@@ -35,10 +72,26 @@ defmodule Asteroidsio.GameLoop do
 
         { newX, newY } = Graphmath.Vec2.create(x, y) |> Graphmath.Vec2.add(speedVector)
 
+        newBullets = update_bullets(bullets)
+
+        { last_time_fired, newBullets } = if fire_pressed && (last_time_fired == nil || now - last_time_fired > 200) do
+          bullet = %{:x => newX - 14,
+                     :y => newY - 15,
+                     :speed => 8,
+                     :direction => newDir,
+                     :last_update => now,
+                     :created_at => now}
+          { now, [bullet | newBullets] }
+        else
+          { last_time_fired, newBullets }
+        end
+
         {id, %{v | :x => newX,
                    :y => newY,
                    :direction => newDir,
-                   :last_update => now}}
+                   :last_update => now,
+                   :bullets => newBullets,
+                   :last_time_fired => last_time_fired}}
       {id, v} ->
         {id, v}
     end
