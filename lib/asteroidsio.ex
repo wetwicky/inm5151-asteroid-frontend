@@ -14,7 +14,7 @@ defmodule Asteroidsio do
       # worker(Asteroidsio.Worker, [arg1, arg2, arg3]),
       worker(Asteroidsio.Bucket, []),
       worker(Asteroidsio.ChannelWatcher, [:player]),
-      worker(Asteroidsio.GameLoop, [])
+      worker(Asteroidsio.GameLoop, [:game_loop])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
