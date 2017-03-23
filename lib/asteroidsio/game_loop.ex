@@ -5,8 +5,6 @@ defmodule Asteroidsio.GameLoop do
   ## Client API
 
   def update_bullet(bullet) do
-    IO.puts "HERE =============================="
-    IO.inspect bullet
     %{:x => x,
       :y => y,
       :speed => speed,
@@ -66,8 +64,8 @@ defmodule Asteroidsio.GameLoop do
 
         speed = if up_pressed, do: 5 * deltaPercent, else: 0
 
-        sx = speed * :math.cos(newDir / 360 * :math.pi * 2);
-        sy = speed * :math.sin(newDir / 360 * :math.pi * 2);
+        sx = speed * :math.cos(newDir / 360 * :math.pi * 2)
+        sy = speed * :math.sin(newDir / 360 * :math.pi * 2)
         speedVector = Graphmath.Vec2.create(sx, sy)
 
         { newX, newY } = Graphmath.Vec2.create(x, y) |> Graphmath.Vec2.add(speedVector)
@@ -75,8 +73,13 @@ defmodule Asteroidsio.GameLoop do
         newBullets = update_bullets(bullets)
 
         { last_time_fired, newBullets } = if fire_pressed && (last_time_fired == nil || now - last_time_fired > 200) do
-          bullet = %{:x => newX - 14,
-                     :y => newY - 15,
+          sx = 16 * :math.cos(newDir / 360 * :math.pi * 2)
+          sy = 16 * :math.sin(newDir / 360 * :math.pi * 2)
+          speedVector = Graphmath.Vec2.create(sx, sy)
+
+          { bulletX, bulletY } = Graphmath.Vec2.create(newX, newY) |> Graphmath.Vec2.add(speedVector)
+          bullet = %{:x => bulletX - 14,
+                     :y => bulletY - 15,
                      :speed => 8,
                      :direction => newDir,
                      :last_update => now,
@@ -104,23 +107,25 @@ defmodule Asteroidsio.GameLoop do
   end
 
   def init(_) do
-    schedule_work()
-    {:ok, %{}}
+    {:ok, %{:timer => schedule_work()}}
   end
 
-  def handle_info(:tick, state) do
-    schedule_work()
+  def handle_info(:tick, _state) do
+    timerRef = schedule_work()
     player_bucket = Map.drop(Asteroidsio.Bucket.update_all(&tick/1), [:id])
     Asteroidsio.PlayerChannel.update_entities(%{:players => player_bucket})
-    {:noreply, state}
+    {:noreply, %{:timer => timerRef}}
   end
 
   def code_change(_old, state, _extra) do
-    {:ok, state}
+    Process.cancel_timer(state.timer)
+    {:ok, %{}}
   end
 
-  def terminate(_reason, state) do
-    state
+  def terminate(reason, state) do
+    IO.puts "Asked to stop because #{inspect reason} with state #{inspect state}"
+    Process.cancel_timer(state.timer)
+    :ok
   end
 
   defp schedule_work() do

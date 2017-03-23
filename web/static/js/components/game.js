@@ -27,11 +27,11 @@ class Game extends Component {
         }
 
         console.log("key down:", e);
-        if (e.keyCode == 37) { // Left
+        if (e.keyCode == 37 || e.keyCode == 65) { // Left
             this.props.leftPressed()
-        } else if (e.keyCode == 38) { // Up
+        } else if (e.keyCode == 38 || e.keyCode == 188) { // Up
             this.props.upPressed()
-        } else if (e.keyCode == 39) { // Right
+        } else if (e.keyCode == 39 || e.keyCode == 69) { // Right
             this.props.rightPressed()
         } else if (e.keyCode == 32) { // Space
             this.props.spacePressed()
@@ -40,11 +40,11 @@ class Game extends Component {
 
     onKeyUp(e) {
         console.log("key up:", e);
-        if (e.keyCode == 37) { // Left
+        if (e.keyCode == 37 || e.keyCode == 65) { // Left
             this.props.leftReleased()
-        } else if (e.keyCode == 38) { // Up
+        } else if (e.keyCode == 38 || e.keyCode == 188) { // Up
             this.props.upReleased()
-        } else if (e.keyCode == 39) { // Right
+        } else if (e.keyCode == 39 || e.keyCode == 69) { // Right
             this.props.rightReleased()
         } else if (e.keyCode == 32) { // Space
             this.props.spaceReleased()
