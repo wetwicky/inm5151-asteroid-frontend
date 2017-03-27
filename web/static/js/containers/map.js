@@ -92,6 +92,7 @@ Map.propTypes = {
     playerId: React.PropTypes.string,
     name: React.PropTypes.string,
     players: React.PropTypes.object,
+    asteroids: React.PropTypes.object,
     windowResize: React.PropTypes.func
 }
 
