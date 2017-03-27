@@ -102,6 +102,7 @@ const mapStateToProps = (state, ownProps) => ({
     playerId: state.player.id,
     name: state.game.name,
     players: state.game.players,
+    asteroids: state.game.asteroids,
 })
 
 const mapDispatchToProps = (dispatch) => ({
