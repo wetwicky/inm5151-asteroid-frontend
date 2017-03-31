@@ -1,4 +1,4 @@
-import { UPDATE, UPDATE_ENTITIES, GET_PLAYERS, PLAYER_LEFT, FIRE, RECEIVE_PLAYER_ID } from '../constants';
+import { UPDATE, UPDATE_ENTITIES, GET_PLAYERS, PLAYER_LEFT, RECEIVE_PLAYER_ID } from '../constants';
 
 export function update() {
     return {

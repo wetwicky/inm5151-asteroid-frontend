@@ -2,6 +2,7 @@ defmodule Asteroidsio.GameLoop do
   use GenServer
   require Graphmath.Vec2
   import Asteroidsio.Player
+  import Asteroidsio.Asteroid
 
   ## Client API
 

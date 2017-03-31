@@ -13,7 +13,8 @@ const game = (state = {
     name: '',
     w: 0,
     h: 0,
-    players: {}
+    players: {},
+    asteroids: {}
 }, action) => {
     switch (action.type) {
         case CONNECTED:
@@ -39,9 +40,11 @@ const game = (state = {
         case UPDATE_ENTITIES:
         {
             let players = action.payload.players
+            let asteroids = action.payload.asteroids
             return {
                 ...state,
-                players: players
+                players: players,
+                asteroids: asteroids
             }
         }
         case GET_PLAYERS:
