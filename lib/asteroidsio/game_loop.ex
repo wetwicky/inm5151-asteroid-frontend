@@ -40,6 +40,7 @@ defmodule Asteroidsio.GameLoop do
              :x => x,
              :y => y,
              :direction => dir,
+             :speed => speed,
              :last_update => last_update
             }} ->
         updateAsteroid(id,
@@ -47,6 +48,7 @@ defmodule Asteroidsio.GameLoop do
           x,
           y,
           dir,
+          speed,
           last_update)
 
       {id, v} ->
@@ -67,7 +69,9 @@ defmodule Asteroidsio.GameLoop do
   def handle_info(:tick, _state) do
     timerRef = schedule_work()
     bucket = Map.drop(Asteroidsio.Bucket.update_all(&tick/1), [:id])
-    Asteroidsio.PlayerChannel.update_entities(bucket)
+    createAsteroids(bucket)
+    
+    Asteroidsio.PlayerChannel.update_entities(Asteroidsio.Bucket.current)
     {:noreply, %{:timer => timerRef}}
   end
 
