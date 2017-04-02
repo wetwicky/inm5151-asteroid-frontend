@@ -50,3 +50,6 @@ deps
 
 # Compiled assets
 priv
+
+# Editor temp files
+.#*
