@@ -3,7 +3,7 @@
 import {Socket} from 'phoenix'
 import { connecting, connected, disconnect, disconnected } from '../actions'
 import { updateEntities, playerLeft, getPlayers, receivePlayerId } from '../actions/player'
-import { RECEIVE_PLAYER_ID, CONNECT, DISCONNECT, UPDATE_ENTITIES, UPDATE_PLAYER, UPDATE, GET_PLAYERS, PLAYER_LEFT, FIRE } from "../constants/index";
+import { RECEIVE_PLAYER_ID, CONNECT, DISCONNECT, UPDATE_ENTITIES, UPDATE_PLAYER, UPDATE, GET_PLAYERS, PLAYER_LEFT } from "../constants/index";
 
 const socketMiddleware = (function () {
     var socket = null
@@ -122,12 +122,6 @@ const socketMiddleware = (function () {
                 channel.push(UPDATE_PLAYER, payload)
                 
                 return result
-            }
-            case FIRE:
-            {
-               if (socket == null) {
-                    return
-               }
             }
 
             default:

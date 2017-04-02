@@ -15,7 +15,6 @@ export const UPDATE_PLAYER = 'UPDATE_PLAYER'
 export const UPDATE_ENTITIES = 'UPDATE_ENTITIES'
 export const GET_PLAYERS = 'GET_PLAYERS'
 export const PLAYER_LEFT = 'PLAYER_LEFT'
-export const FIRE = 'FIRE'
 export const BASE_SPEED = 10
 export const BASE_ROTATION_SPEED = 2
 export const RECEIVE_PLAYER_ID = 'RECEIVE_PLAYER_ID'

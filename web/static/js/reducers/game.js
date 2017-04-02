@@ -15,7 +15,8 @@ const game = (state = {
     name: '',
     w: 0,
     h: 0,
-    players: {}
+    players: {},
+    asteroids: {}
 }, action) => {
     switch (action.type) {
         case CONNECTED:
