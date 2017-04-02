@@ -5,7 +5,9 @@ import {
     WINDOW_RESIZE,
     UPDATE_ENTITIES,
     PLAYER_LEFT,
-    GET_PLAYERS
+    GET_PLAYERS,
+    PLAYER,
+    ASTEROID
 } from '../constants'
 
 const game = (state = {
@@ -38,10 +40,26 @@ const game = (state = {
             }
         case UPDATE_ENTITIES:
         {
-            let players = action.payload.players
+            let players = {}
+            let asteroids = {}
+            Object.keys(action.payload).forEach(key => {
+                let obj = action.payload[key]
+                switch (obj.type) {
+                case PLAYER:
+                    players[key] = obj
+                    break
+                case ASTEROID:
+                    asteroids[key] = obj
+                    break
+                default:
+                    console.log(key)
+                    console.log(object)
+                }
+            });
             return {
                 ...state,
-                players: players
+                players: players,
+                asteroids: asteroids
             }
         }
         case GET_PLAYERS:
@@ -53,7 +71,6 @@ const game = (state = {
         }
         case PLAYER_LEFT:
         {
-            console.warn(state.players)
             let players = {
                 ...state.players
             }

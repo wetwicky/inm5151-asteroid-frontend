@@ -2,6 +2,7 @@ defmodule Asteroidsio.GameLoop do
   use GenServer
   require Graphmath.Vec2
   import Asteroidsio.Player
+  import Asteroidsio.Asteroid
 
   ## Client API
 
@@ -21,19 +22,32 @@ defmodule Asteroidsio.GameLoop do
              :last_time_fired => last_time_fired,
              :last_update => last_update,
              :bullets => bullets
-             }} ->
+            }} ->
         updatePlayers(id,
-                      v,
-                      x,
-                      y,
-                      dir,
-                      up_pressed,
-                      left_pressed,
-                      right_pressed,
-                      fire_pressed,
-                      last_time_fired,
-                      last_update,
-                      bullets)
+          v,
+          x,
+          y,
+          dir,
+          up_pressed,
+          left_pressed,
+          right_pressed,
+          fire_pressed,
+          last_time_fired,
+          last_update,
+          bullets)
+
+      {id, %{:type => :asteroid,
+             :x => x,
+             :y => y,
+             :direction => dir,
+             :last_update => last_update
+            }} ->
+        updateAsteroid(id,
+          v,
+          x,
+          y,
+          dir,
+          last_update)
 
       {id, v} ->
         {id, v}
@@ -52,8 +66,8 @@ defmodule Asteroidsio.GameLoop do
 
   def handle_info(:tick, _state) do
     timerRef = schedule_work()
-    player_bucket = Map.drop(Asteroidsio.Bucket.update_all(&tick/1), [:id])
-    Asteroidsio.PlayerChannel.update_entities(%{:players => player_bucket})
+    bucket = Map.drop(Asteroidsio.Bucket.update_all(&tick/1), [:id])
+    Asteroidsio.PlayerChannel.update_entities(bucket)
     {:noreply, %{:timer => timerRef}}
   end
 

@@ -19,3 +19,7 @@ export const FIRE = 'FIRE'
 export const BASE_SPEED = 10
 export const BASE_ROTATION_SPEED = 2
 export const RECEIVE_PLAYER_ID = 'RECEIVE_PLAYER_ID'
+
+// Server types
+export const PLAYER = 'player'
+export const ASTEROID = 'asteroid'
