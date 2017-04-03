@@ -63,19 +63,26 @@ defmodule Asteroidsio.GameLoop do
   end
 
   def init(_) do
-    {:ok, %{:timer => schedule_work()}}
+    {:ok, %{:timer => schedule_work(), :timerSlowWork => schedule_slow_work()}}
   end
 
-  def handle_info(:tick, _state) do
+  def handle_info(:tick, state) do
     timerRef = schedule_work()
     bucket = Map.drop(Asteroidsio.Bucket.update_all(&tick/1), [:id])
+    
+    Asteroidsio.PlayerChannel.update_entities(bucket)
+    {:noreply, %{state | :timer => timerRef}}
+  end
+
+  def handle_info(:tickSlowWork, state) do
+    timerRef = schedule_slow_work()
+    bucket = Asteroidsio.Bucket.current
     players = Enum.filter(bucket, fn({_, v}) -> v.type == :player end)
     asteroids = Enum.filter(bucket, fn({_, v}) -> v.type == :asteroid end)
     createAsteroids(players, asteroids)
     deleteAsteroids(players, asteroids)
     
-    Asteroidsio.PlayerChannel.update_entities(Asteroidsio.Bucket.current)
-    {:noreply, %{:timer => timerRef}}
+    {:noreply, %{state | :timerSlowWork => timerRef}}
   end
 
   def code_change(_old, state, _extra) do
@@ -90,6 +97,10 @@ defmodule Asteroidsio.GameLoop do
   end
 
   defp schedule_work() do
-    Process.send_after(self(), :tick, trunc(1000/60)) # 60 times per seconds
+    Process.send_after(self(), :tick, trunc(1000/60)) # 60 times per second
+  end
+
+  defp schedule_slow_work() do
+    Process.send_after(self(), :tickSlowWork, trunc(1000)) # 1 time per second
   end
 end

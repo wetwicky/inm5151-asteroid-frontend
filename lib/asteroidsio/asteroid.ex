@@ -44,25 +44,27 @@ defmodule Asteroidsio.Asteroid do
     playersCount = length players
     asteroidsCount = length asteroids
 
-    if asteroidsCount < 12 * playersCount do
-      shouldCreateOne = Enum.random(0..50)
-      if shouldCreateOne == 1 do
-        {_, nearPlayer} = Enum.random(players)
-        deltaX = Enum.random(-100..100)
-        deltaY = Enum.random(-100..100)
-        direction = Enum.random(0..359)
-        speed = Enum.random(1..6)
+    for _ <- players do
+      if asteroidsCount < 12 * playersCount do
+        shouldCreateOne = Enum.random(0..5)
+        if shouldCreateOne == 1 do
+          {_, nearPlayer} = Enum.random(players)
+          deltaX = Enum.random(-100..100)
+          deltaY = Enum.random(-100..100)
+          direction = Enum.random(0..359)
+          speed = Enum.random(1..6)
 
-        IO.puts "Creating an asteroid"
-        Asteroidsio.Bucket.add(%{
-          :type => :asteroid,
-          :x => nearPlayer.x + deltaX,
-          :y => nearPlayer.y + deltaY,
-          :direction => direction,
-          :last_update => nil,
-          :size => 1,
-          :speed => speed
-        })
+          IO.puts "Creating an asteroid"
+          Asteroidsio.Bucket.add(%{
+            :type => :asteroid,
+            :x => nearPlayer.x + deltaX,
+            :y => nearPlayer.y + deltaY,
+            :direction => direction,
+            :last_update => nil,
+            :size => 1,
+            :speed => speed
+          })
+        end
       end
     end
   end
