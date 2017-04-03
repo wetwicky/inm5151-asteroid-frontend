@@ -27,6 +27,8 @@ defmodule Asteroidsio.UserSocket do
         :x => 0,
         :y => 0,
         :direction => 90,
+        :dx => 0,
+        :dy => 0,
         :last_update => nil,
         :bullets => [],
         :last_time_fired => nil

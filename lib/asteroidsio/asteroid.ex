@@ -10,7 +10,7 @@ defmodule Asteroidsio.Asteroid do
                     last_update) do
     now = :os.system_time(:milli_seconds)
     delta = if last_update != nil, do: now - last_update, else: 0
-    deltaPercent = delta / (1000 / 60)
+    deltaPercent = delta / (1000 / 30)
 
     sx = speed * deltaPercent * :math.cos(dir / 360 * :math.pi * 2)
     sy = speed * deltaPercent * :math.sin(dir / 360 * :math.pi * 2)
@@ -45,7 +45,7 @@ defmodule Asteroidsio.Asteroid do
     asteroidsCount = length asteroids
 
     for _ <- players do
-      if asteroidsCount < 12 * playersCount do
+      if asteroidsCount < 2 * playersCount do
         shouldCreateOne = Enum.random(0..5)
         if shouldCreateOne == 1 do
           {_, nearPlayer} = Enum.random(players)
@@ -63,7 +63,7 @@ defmodule Asteroidsio.Asteroid do
             :last_update => nil,
             :size => 1,
             :speed => speed
-          })
+          })  
         end
       end
     end

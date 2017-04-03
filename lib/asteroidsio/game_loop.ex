@@ -15,6 +15,8 @@ defmodule Asteroidsio.GameLoop do
              :x => x,
              :y => y,
              :direction => dir,
+             :dx => dx,
+             :dy => dy,
              :up_pressed => up_pressed,
              :left_pressed => left_pressed,
              :right_pressed => right_pressed,
@@ -28,6 +30,8 @@ defmodule Asteroidsio.GameLoop do
           x,
           y,
           dir,
+          dx,
+          dy,
           up_pressed,
           left_pressed,
           right_pressed,
@@ -80,6 +84,7 @@ defmodule Asteroidsio.GameLoop do
     players = Enum.filter(bucket, fn({_, v}) -> v.type == :player end)
     asteroids = Enum.filter(bucket, fn({_, v}) -> v.type == :asteroid end)
     createAsteroids(players, asteroids)
+    createAsteroids(players, asteroids)
     deleteAsteroids(players, asteroids)
     
     {:noreply, %{state | :timerSlowWork => timerRef}}
@@ -97,10 +102,10 @@ defmodule Asteroidsio.GameLoop do
   end
 
   defp schedule_work() do
-    Process.send_after(self(), :tick, trunc(1000/60)) # 60 times per second
+    Process.send_after(self(), :tick, trunc(1000/30)) # 30 times per second
   end
 
   defp schedule_slow_work() do
-    Process.send_after(self(), :tickSlowWork, trunc(1000)) # 1 time per second
+    Process.send_after(self(), :tickSlowWork, trunc(10000)) # 1 time per 10 seconds
   end
 end

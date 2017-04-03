@@ -8,6 +8,8 @@ defmodule Asteroidsio.Player do
                     x,
                     y,
                     dir,
+                    dx,
+                    dy,
                     up_pressed,
                     left_pressed,
                     right_pressed,
@@ -17,19 +19,24 @@ defmodule Asteroidsio.Player do
                     bullets) do
     now = :os.system_time(:milli_seconds)
     delta = if last_update != nil, do: now - last_update, else: 0
-    deltaPercent = delta / (1000 / 60)
+    deltaPercent = delta / (1000 / 30)
 
     newDir = dir
     newDir = if left_pressed, do: newDir - 200 * deltaPercent * :math.pi / 180, else: newDir
     newDir = if right_pressed, do: newDir + 200 * deltaPercent * :math.pi / 180, else: newDir
 
-    speed = if up_pressed, do: 5 * deltaPercent, else: 0
+    newSpeed = if up_pressed, do: 1/10 * deltaPercent, else: 0 
 
-    sx = speed * :math.cos(newDir / 360 * :math.pi * 2)
-    sy = speed * :math.sin(newDir / 360 * :math.pi * 2)
-    speedVector = Graphmath.Vec2.create(sx, sy)
 
-    { newX, newY } = Graphmath.Vec2.create(x, y) |> Graphmath.Vec2.add(speedVector)
+    sx = newSpeed * :math.cos(newDir / 360 * :math.pi * 2)
+    sy = newSpeed * :math.sin(newDir / 360 * :math.pi * 2)
+    speedVector = Graphmath.Vec2.create(dx, dy)
+    newSpeedVector = Graphmath.Vec2.create(sx, sy) |> Graphmath.Vec2.add(speedVector) 
+
+    { newX, newY } = Graphmath.Vec2.create(x, y) |> Graphmath.Vec2.add(newSpeedVector)
+    vlength = Graphmath.Vec2.length_squared(newSpeedVector)
+    newSpeedVector2 = if vlength <= 100, do: newSpeedVector, else: speedVector
+    { newDx, newDy } = newSpeedVector2
 
     newBullets = update_bullets(bullets)
 
@@ -53,6 +60,8 @@ defmodule Asteroidsio.Player do
     {id, %{v | :x => newX,
                :y => newY,
                :direction => newDir,
+               :dx => newDx,
+               :dy => newDy,
                :last_update => now,
                :bullets => newBullets,
                :last_time_fired => last_time_fired}}
