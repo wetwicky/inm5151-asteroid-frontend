@@ -69,7 +69,13 @@ defmodule Asteroidsio.GameLoop do
   def handle_info(:tick, _state) do
     timerRef = schedule_work()
     bucket = Map.drop(Asteroidsio.Bucket.update_all(&tick/1), [:id])
-    createAsteroids(bucket)
+    players = Enum.filter(bucket, fn({_, v}) -> v.type == :player end)
+    asteroids = Enum.filter(bucket, fn({_, v}) -> v.type == :asteroid end)
+    deleteAsteroids(players, asteroids)
+    bucket = Asteroidsio.Bucket.current
+    players = Enum.filter(bucket, fn({_, v}) -> v.type == :player end)
+    asteroids = Enum.filter(bucket, fn({_, v}) -> v.type == :asteroid end)
+    createAsteroids(players, asteroids)
     
     Asteroidsio.PlayerChannel.update_entities(Asteroidsio.Bucket.current)
     {:noreply, %{:timer => timerRef}}

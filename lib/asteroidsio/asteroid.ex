@@ -23,10 +23,28 @@ defmodule Asteroidsio.Asteroid do
                :last_update => now}}
   end
 
-  def createAsteroids(bucket) do
-    players = Enum.filter(bucket, fn({k, v}) -> v.type == :player end)
+  def inRange(asteroid, player) do
+    IO.inspect asteroid
+    IO.inspect player
+    IO.inspect asteroid.x - 10000 <= player.x && player.x <= asteroid.x + 10000 && asteroid.y - 10000 <= player.y && player.y <= asteroid.x + 10000
+    asteroid.x - 10000 <= player.x && player.x <= asteroid.x + 10000 &&
+      asteroid.y - 10000 <= player.y && player.y <= asteroid.x + 10000
+  end
+
+  def inRangeOfAny(asteroid, players) do
+    Enum.any?(players, fn({k, player}) -> inRange(asteroid, player) end)
+  end
+
+  def deleteAsteroids(players, asteroids) do
+    Enum.filter_map(
+      asteroids,
+      fn({k, asteroid}) -> not inRangeOfAny(asteroid, players) end,
+      fn({k, asteroid}) -> Asteroidsio.Bucket.delete(k) end
+    )
+  end
+
+  def createAsteroids(players, asteroids) do
     playersCount = length players
-    asteroids = Enum.filter(bucket, fn({k, v}) -> v.type == :asteroid end)
     asteroidsCount = length asteroids
 
     if asteroidsCount < 12 * playersCount do
@@ -38,12 +56,14 @@ defmodule Asteroidsio.Asteroid do
         direction = Enum.random(0..359)
         speed = Enum.random(1..6)
 
+        IO.puts "Creating an asteroid"
         Asteroidsio.Bucket.add(%{
           :type => :asteroid,
           :x => nearPlayer.x + deltaX,
           :y => nearPlayer.y + deltaY,
           :direction => direction,
           :last_update => nil,
+          :size => 1,
           :speed => speed
         })
       end
