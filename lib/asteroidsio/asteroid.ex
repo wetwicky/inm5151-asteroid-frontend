@@ -46,7 +46,7 @@ defmodule Asteroidsio.Asteroid do
 
     for _ <- players do
       if asteroidsCount < 2 * playersCount do
-        shouldCreateOne = Enum.random(0..5)
+        shouldCreateOne = Enum.random(0..1)
         if shouldCreateOne == 1 do
           {_, nearPlayer} = Enum.random(players)
           deltaX = Enum.random(-100..100)
