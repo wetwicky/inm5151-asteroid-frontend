@@ -24,9 +24,6 @@ defmodule Asteroidsio.Asteroid do
   end
 
   def inRange(asteroid, player) do
-    IO.inspect asteroid
-    IO.inspect player
-    IO.inspect asteroid.x - 10000 <= player.x && player.x <= asteroid.x + 10000 && asteroid.y - 10000 <= player.y && player.y <= asteroid.x + 10000
     asteroid.x - 10000 <= player.x && player.x <= asteroid.x + 10000 &&
       asteroid.y - 10000 <= player.y && player.y <= asteroid.x + 10000
   end
