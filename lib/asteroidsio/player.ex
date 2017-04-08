@@ -25,7 +25,7 @@ defmodule Asteroidsio.Player do
     newDir = if left_pressed, do: newDir - 200 * deltaPercent * :math.pi / 180, else: newDir
     newDir = if right_pressed, do: newDir + 200 * deltaPercent * :math.pi / 180, else: newDir
 
-    newSpeed = if up_pressed, do: 1/10 * deltaPercent, else: 0 
+    newSpeed = if up_pressed, do: 1/5 * deltaPercent, else: 0 
 
 
     sx = newSpeed * :math.cos(newDir / 360 * :math.pi * 2)
@@ -35,7 +35,7 @@ defmodule Asteroidsio.Player do
 
     { newX, newY } = Graphmath.Vec2.create(x, y) |> Graphmath.Vec2.add(newSpeedVector)
     vlength = Graphmath.Vec2.length_squared(newSpeedVector)
-    newSpeedVector2 = if vlength <= 100, do: newSpeedVector, else: speedVector
+    newSpeedVector2 = if vlength <= 100, do: newSpeedVector, else: ( Graphmath.Vec2.scale(Graphmath.Vec2.normalize(newSpeedVector), 10 ))
     { newDx, newDy } = newSpeedVector2
 
     newBullets = update_bullets(bullets)
