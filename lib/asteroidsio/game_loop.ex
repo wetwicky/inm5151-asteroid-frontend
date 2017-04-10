@@ -23,7 +23,8 @@ defmodule Asteroidsio.GameLoop do
              :fire_pressed => fire_pressed,
              :last_time_fired => last_time_fired,
              :last_update => last_update,
-             :bullets => bullets
+             :bullets => bullets,
+             :score => score
             }} ->
         updatePlayers(id,
           v,
@@ -38,7 +39,8 @@ defmodule Asteroidsio.GameLoop do
           fire_pressed,
           last_time_fired,
           last_update,
-          bullets)
+          bullets,
+          score)
 
       {id, %{:type => :asteroid,
              :x => x,
@@ -73,7 +75,7 @@ defmodule Asteroidsio.GameLoop do
   def handle_info(:tick, state) do
     timerRef = schedule_work()
     bucket = Map.drop(Asteroidsio.Bucket.update_all(&tick/1), [:id])
-    
+
     Asteroidsio.PlayerChannel.update_entities(bucket)
     {:noreply, %{state | :timer => timerRef}}
   end
@@ -86,7 +88,7 @@ defmodule Asteroidsio.GameLoop do
     createAsteroids(players, asteroids)
     createAsteroids(players, asteroids)
     deleteAsteroids(players, asteroids)
-    
+
     {:noreply, %{state | :timerSlowWork => timerRef}}
   end
 

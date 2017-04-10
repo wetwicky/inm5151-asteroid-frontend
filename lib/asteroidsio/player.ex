@@ -16,7 +16,8 @@ defmodule Asteroidsio.Player do
                     fire_pressed,
                     last_time_fired,
                     last_update,
-                    bullets) do
+                    bullets,
+                    score) do
     now = :os.system_time(:milli_seconds)
     delta = if last_update != nil, do: now - last_update, else: 0
     deltaPercent = delta / (1000 / 30)
@@ -25,13 +26,13 @@ defmodule Asteroidsio.Player do
     newDir = if left_pressed, do: newDir - 200 * deltaPercent * :math.pi / 180, else: newDir
     newDir = if right_pressed, do: newDir + 200 * deltaPercent * :math.pi / 180, else: newDir
 
-    newSpeed = if up_pressed, do: 1/5 * deltaPercent, else: 0 
+    newSpeed = if up_pressed, do: 1/5 * deltaPercent, else: 0
 
 
     sx = newSpeed * :math.cos(newDir / 360 * :math.pi * 2)
     sy = newSpeed * :math.sin(newDir / 360 * :math.pi * 2)
     speedVector = Graphmath.Vec2.create(dx, dy)
-    newSpeedVector = Graphmath.Vec2.create(sx, sy) |> Graphmath.Vec2.add(speedVector) 
+    newSpeedVector = Graphmath.Vec2.create(sx, sy) |> Graphmath.Vec2.add(speedVector)
 
     { newX, newY } = Graphmath.Vec2.create(x, y) |> Graphmath.Vec2.add(newSpeedVector)
     vlength = Graphmath.Vec2.length_squared(newSpeedVector)
@@ -57,6 +58,8 @@ defmodule Asteroidsio.Player do
       { last_time_fired, newBullets }
     end
 
+    newScore = score #TODO set new score depend on collision
+
     {id, %{v | :x => newX,
                :y => newY,
                :direction => newDir,
@@ -64,6 +67,7 @@ defmodule Asteroidsio.Player do
                :dy => newDy,
                :last_update => now,
                :bullets => newBullets,
-               :last_time_fired => last_time_fired}}
+               :last_time_fired => last_time_fired,
+               :score => newScore}}
   end
 end
