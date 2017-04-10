@@ -61,3 +61,10 @@ export function receivePlayerId(playerId) {
         payload: playerId
     }
 }
+
+export function playerCollided(occurred) {
+  return {
+        type: PLAYER_COLLIDED,
+        payload: occured
+  }
+}
