@@ -5,7 +5,8 @@ const player = (state = {
     right: false,
     up: false,
     lastUpdate: null,
-    id: null
+    id: null,
+    score: 0
 }, action) => {
     switch (action.type) {
         case UPDATE:
@@ -15,7 +16,7 @@ const player = (state = {
             }
 
             return newState
-        
+
         case RECEIVE_PLAYER_ID:
             return {
                 ...state,

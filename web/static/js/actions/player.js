@@ -1,4 +1,4 @@
-import { UPDATE, UPDATE_ENTITIES, GET_PLAYERS, PLAYER_LEFT, RECEIVE_PLAYER_ID } from '../constants';
+import { UPDATE, UPDATE_ENTITIES, GET_PLAYERS, PLAYER_LEFT, RECEIVE_PLAYER_ID, PLAYER_COLLIDED } from '../constants';
 
 export function update() {
     return {
@@ -62,9 +62,9 @@ export function receivePlayerId(playerId) {
     }
 }
 
-export function playerCollided(occurred) {
+export function playerCollided(payload) {
   return {
         type: PLAYER_COLLIDED,
-        payload: occured
+        payload: payload
   }
 }

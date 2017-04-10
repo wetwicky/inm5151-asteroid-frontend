@@ -2,8 +2,8 @@
 
 import {Socket} from 'phoenix'
 import { connecting, connected, disconnect, disconnected } from '../actions'
-import { updateEntities, playerLeft, getPlayers, receivePlayerId } from '../actions/player'
-import { RECEIVE_PLAYER_ID, CONNECT, DISCONNECT, UPDATE_ENTITIES, UPDATE_PLAYER, UPDATE, GET_PLAYERS, PLAYER_LEFT } from "../constants/index";
+import { updateEntities, playerLeft, getPlayers, receivePlayerId, playerCollided } from '../actions/player'
+import { RECEIVE_PLAYER_ID, CONNECT, DISCONNECT, UPDATE_ENTITIES, UPDATE_PLAYER, UPDATE, GET_PLAYERS, PLAYER_LEFT, PLAYER_COLLIDED } from "../constants/index";
 
 const socketMiddleware = (function () {
     var socket = null
@@ -48,6 +48,9 @@ const socketMiddleware = (function () {
                 break
             case PLAYER_LEFT:
                 store.dispatch(playerLeft(data.id))
+                break
+            case PLAYER_COLLIDED:
+                store.dispatch(playerCollided(data))
                 break
             case undefined:
             case 'phx_close':
@@ -107,11 +110,11 @@ const socketMiddleware = (function () {
             case UPDATE:
             {
                 let result = next(action)
-                
+
                 if (socket == null) {
                     return
                 }
-                
+
                 let player = store.getState().player
                 let payload = {
                     up_pressed: player.up_pressed,
@@ -120,7 +123,7 @@ const socketMiddleware = (function () {
                     fire_pressed: player.fire_pressed,
                 }
                 channel.push(UPDATE_PLAYER, payload)
-                
+
                 return result
             }
 
