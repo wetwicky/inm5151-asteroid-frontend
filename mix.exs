@@ -35,6 +35,7 @@ defmodule Asteroidsio.Mixfile do
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
      {:graphmath, "~> 1.0.2"},
+     {:collision, "~> 0.3.1"},
     ]
   end
 end
