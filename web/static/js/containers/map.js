@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Canvas from '../components/canvas'
 import { windowResize } from '../actions/canvas'
 import { collisions } from '../actions/player'
+import { disconnect } from '../actions/index'
 import { MAX_HEALTH, MAX_HEALTH_ASTEROID } from "../constants/index";
 
 class Map extends Component {
@@ -18,9 +19,13 @@ class Map extends Component {
     }
 
     render() {
-        const { w, h, playerId, players, asteroids } = this.props
+        const { w, h, playerId, players, asteroids, disconnect } = this.props
         const player = players[playerId]
         if (player == null) return null
+
+        if (player.health <= 0) {
+            disconnect()
+        }
 
         const transform = `translate(${ w / 2 } ${ h / 2 }) rotate(${player.direction} 15 16)`
 
@@ -287,6 +292,7 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch) => ({
     windowResize: (dimensions) => dispatch(windowResize(dimensions)),
     collisions: (collisionList) => dispatch(collisions(collisionList)),
+    disconnect: () => dispatch(disconnect()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map)
