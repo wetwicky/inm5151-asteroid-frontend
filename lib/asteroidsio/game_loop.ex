@@ -88,7 +88,6 @@ defmodule Asteroidsio.GameLoop do
     players = Enum.filter(bucket, fn({_, v}) -> v.type == :player end)
     asteroids = Enum.filter(bucket, fn({_, v}) -> v.type == :asteroid end)
     createAsteroids(players, asteroids)
-    createAsteroids(players, asteroids)
     deleteAsteroids(players, asteroids)
 
     {:noreply, %{state | :timerSlowWork => timerRef}}

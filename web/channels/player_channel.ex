@@ -35,10 +35,32 @@ defmodule Asteroidsio.PlayerChannel do
   def handle_in("COLLISIONS", payload, socket) do
     Enum.map(payload, fn collision ->
         Asteroidsio.Bucket.update(collision["id"], fn elem ->
-            %{elem | :health => elem[:health] - 1}
+            IO.puts("---")
+            IO.inspect(collision["type"])
+            IO.inspect(elem[:health])
+            if elem != nil && elem != %{} do
+                %{
+                    elem |
+                    :health => elem[:health] - 1,
+                    :last_hit => socket.assigns.player_id
+                }
+            else
+                %{}
+            end
         end)
+
+        if collision["fromShip"] do
+          Asteroidsio.Bucket.update(socket.assigns.player_id, fn elem ->
+            IO.puts("Player also damaged")
+            IO.inspect(elem[:health])
+            %{
+                elem |
+                :health => elem[:health] - 1,
+                :last_hit => nil
+            }
+          end)
+        end
     end)
-    player = Asteroidsio.Bucket.merge(socket.assigns.player_id, clean_payload)
 
     {:noreply, socket}
   end
