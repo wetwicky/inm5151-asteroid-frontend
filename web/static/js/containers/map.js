@@ -31,6 +31,14 @@ class Map extends Component {
 
         return (
             <Canvas { ...this.props }>
+                <text
+                      x={ 15 }
+                      y={ 30 }
+                      fontFamily="Verdana"
+                      fontSize="25"
+                      fill="#FFFFFF">
+                    { `Score: ${player.score}` }
+                </text>
                 {
                     Object.keys(players).map((pk, idx) => {
                         if (pk == playerId) return;
@@ -77,6 +85,16 @@ class Map extends Component {
                                 <text
                                     x={ w / 2 + (player.x - p.x) + 15 }
                                     y={ h / 2 + (player.y - p.y + 80) }
+                                    fontFamily="Verdana"
+                                    fontSize="15"
+                                    fill="#FF8844"
+                                    fillOpacity="0.4"
+                                    textAnchor="middle">
+                                    { p.score }
+                                </text>
+                                <text
+                                    x={ w / 2 + (player.x - p.x) + 15 }
+                                    y={ h / 2 + (player.y - p.y + 100) }
                                     fontFamily="Verdana"
                                     fontSize="15"
                                     fill="#FF8844"

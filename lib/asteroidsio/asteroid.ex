@@ -46,8 +46,6 @@ defmodule Asteroidsio.Asteroid do
 
     for _ <- players do
       if asteroidsCount < 2 * playersCount do
-        shouldCreateOne = Enum.random(0..1)
-        if shouldCreateOne == 1 do
           {_, nearPlayer} = Enum.random(players)
           mulX = Enum.random([-1, 1])
           mulY = Enum.random([-1, 1])
@@ -68,7 +66,6 @@ defmodule Asteroidsio.Asteroid do
             :health => 100,
             :last_hit => nil
           })  
-        end
       end
     end
   end

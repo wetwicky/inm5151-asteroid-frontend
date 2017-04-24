@@ -49,22 +49,30 @@ defmodule Asteroidsio.PlayerChannel do
             end
         end)
 
-        if r.health <= 0 && r.type == :asteroid do
+        if r != nil && r != %{} && r.health <= 0 && r.type == :asteroid do
             Asteroidsio.Bucket.update(socket.assigns.player_id, fn elem ->
-                %{
-                    elem |
-                    :score => elem.score + 10
-                }
+                if elem != nil && elem != %{} do
+                    %{
+                        elem |
+                        :score => elem.score + 10
+                    }
+                else
+                    %{}
+                end
             end)
             Asteroidsio.Bucket.delete(collision["id"])
         end
 
-        if r.health <= 0 && r.type == :player do
+        if r != nil && r != %{} && r.health <= 0 && r.type == :player do
             Asteroidsio.Bucket.update(socket.assigns.player_id, fn elem ->
-                %{
-                    elem |
-                    :score => elem.score + r.score / 3
-                }
+                if elem != nil && elem != %{} do
+                    %{
+                        elem |
+                        :score => Float.ceil(elem.score + r.score / 3)
+                    }
+                else
+                    %{}
+                end
             end)
         end
 
