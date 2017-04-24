@@ -46,6 +46,8 @@ defmodule Asteroidsio.ChannelWatcher do
   end
 
   defp drop_channel(state, pid) do
+    channel = HashDict.get(state.channels, pid)
+    IO.inspect(channel)
     %{state | channels: HashDict.delete(state.channels, pid)}
   end
 

@@ -45,7 +45,7 @@ class Map extends Component {
                     { `Score: ${player.score}` }
                 </text>
                 <text
-                    x={ w - 150 }
+                    x={ w - 200 }
                     y={ 30 }
                     fontFamily="Verdana"
                     fontSize="25"
