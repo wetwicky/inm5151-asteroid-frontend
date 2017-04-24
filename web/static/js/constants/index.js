@@ -25,6 +25,9 @@ export const COLLISIONS = 'COLLISIONS'
 // Asteroid
 export const MAX_HEALTH_ASTEROID = 100
 
+// Top ten
+export const UPDATE_TOP_TEN = "UPDATE_TOP_TEN"
+
 // Server types
 export const PLAYER = 'player'
 export const ASTEROID = 'asteroid'

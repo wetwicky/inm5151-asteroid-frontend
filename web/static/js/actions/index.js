@@ -6,7 +6,8 @@ import {
     DISCONNECTED,
     SET_NAME,
     SEND_HELLO,
-    RECEIVE_HELLO
+    RECEIVE_HELLO,
+    UPDATE_TOP_TEN
 } from '../constants'
 
 export const connect = () => {
@@ -55,9 +56,9 @@ export const sendHello = (from) => {
     }
 }
 
-export const receiveHello = (payload) => {
+export const updateTopTen = (topTen) => {
     return {
-        ...payload,
-        type: RECEIVE_HELLO
+        type: UPDATE_TOP_TEN,
+        payload: topTen
     }
 }

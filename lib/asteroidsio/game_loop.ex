@@ -71,7 +71,7 @@ defmodule Asteroidsio.GameLoop do
   end
 
   def init(_) do
-    {:ok, %{:timer => schedule_work(), :timerSlowWork => schedule_slow_work()}}
+    {:ok, %{:timer => schedule_work(), :timerTopTen => schedule_top_ten(), :timerSlowWork => schedule_slow_work()}}
   end
 
   def handle_info(:tick, state) do
@@ -82,9 +82,24 @@ defmodule Asteroidsio.GameLoop do
     {:noreply, %{state | :timer => timerRef}}
   end
 
+  def handle_info(:tickTopTen, state) do
+    timerRef = schedule_top_ten()
+    bucket = Asteroidsio.Bucket.current
+    players = Enum.filter(bucket, fn({_, v}) -> v != nil && v != %{} && v.type == :player end)
+    sortedPlayers = Enum.sort(players, fn({_, v1}, {_, v2}) -> v1.score > v2.score end)
+    parsedPlayers = Enum.map(sortedPlayers, fn({_, v}) -> %{:name => v.name, :score => v.score} end)
+    topTen = Enum.take(parsedPlayers, 10)
+
+    Asteroidsio.PlayerChannel.update_top_ten(%{:data => topTen})
+
+    {:noreply, %{state | :timerTopTen => timerRef}}
+  end
+
   def handle_info(:tickSlowWork, state) do
     timerRef = schedule_slow_work()
     bucket = Asteroidsio.Bucket.current
+    nils = Enum.filter(bucket, fn({_, v}) -> v == nil || v == %{} end)
+    Enum.map(nils, fn({id, _}) -> Asteroidsio.Bucket.delete(id) end)
     players = Enum.filter(bucket, fn({_, v}) -> v.type == :player end)
     asteroids = Enum.filter(bucket, fn({_, v}) -> v.type == :asteroid end)
     createAsteroids(players, asteroids)
@@ -106,6 +121,10 @@ defmodule Asteroidsio.GameLoop do
 
   defp schedule_work() do
     Process.send_after(self(), :tick, trunc(1000/30)) # 30 times per second
+  end
+
+  defp schedule_top_ten() do
+    Process.send_after(self(), :tickTopTen, trunc(1000)) # 1 time per second
   end
 
   defp schedule_slow_work() do

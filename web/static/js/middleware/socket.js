@@ -1,9 +1,9 @@
 "use strict";
 
 import {Socket} from 'phoenix'
-import { connecting, connected, disconnect, disconnected } from '../actions'
+import { connecting, connected, disconnect, disconnected, updateTopTen } from '../actions'
 import { updateEntities, playerLeft, getPlayers, receivePlayerId, playerCollided } from '../actions/player'
-import { RECEIVE_PLAYER_ID, CONNECT, DISCONNECT, UPDATE_ENTITIES, UPDATE_PLAYER, UPDATE, GET_PLAYERS, PLAYER_LEFT, PLAYER_COLLIDED, COLLISIONS } from "../constants/index";
+import { RECEIVE_PLAYER_ID, CONNECT, DISCONNECT, UPDATE_ENTITIES, UPDATE_PLAYER, UPDATE, GET_PLAYERS, PLAYER_LEFT, PLAYER_COLLIDED, COLLISIONS, UPDATE_TOP_TEN } from "../constants/index";
 
 const socketMiddleware = (function () {
     var socket = null
@@ -51,6 +51,10 @@ const socketMiddleware = (function () {
                 break
             case PLAYER_COLLIDED:
                 store.dispatch(playerCollided(data))
+                break
+            case UPDATE_TOP_TEN:
+                console.log('update top ten')
+                store.dispatch(updateTopTen(data))
                 break
             case undefined:
             case 'phx_close':

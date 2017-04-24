@@ -7,7 +7,8 @@ import {
     PLAYER_LEFT,
     GET_PLAYERS,
     PLAYER,
-    ASTEROID
+    ASTEROID,
+    UPDATE_TOP_TEN
 } from '../constants'
 
 const game = (state = {
@@ -16,7 +17,8 @@ const game = (state = {
     w: 0,
     h: 0,
     players: {},
-    asteroids: {}
+    asteroids: {},
+    topTen: []
 }, action) => {
     switch (action.type) {
         case CONNECTED:
@@ -54,7 +56,7 @@ const game = (state = {
                     break
                 default:
                     console.log(key)
-                    console.log(object)
+                    console.log(obj)
                 }
             });
             return {
@@ -79,6 +81,13 @@ const game = (state = {
             return {
                 ...state,
                 players: players
+            }
+        }
+        case UPDATE_TOP_TEN:
+        {
+            return {
+                ...state,
+                topTen: action.payload.data
             }
         }
         default:

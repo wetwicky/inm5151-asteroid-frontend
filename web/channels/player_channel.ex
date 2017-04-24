@@ -7,6 +7,10 @@ defmodule Asteroidsio.PlayerChannel do
     Asteroidsio.Endpoint.broadcast("player:default", "UPDATE_ENTITIES", entities)
   end
 
+  def update_top_ten(entities) do
+    Asteroidsio.Endpoint.broadcast("player:default", "UPDATE_TOP_TEN", entities)
+  end
+
   def join("player:default", _message, socket) do
     send(self(), :after_join)
     :ok = Asteroidsio.ChannelWatcher.monitor(:player, self(), {__MODULE__, :leave, ["default", socket.assigns.player_id]})
@@ -68,7 +72,7 @@ defmodule Asteroidsio.PlayerChannel do
                 if elem != nil && elem != %{} do
                     %{
                         elem |
-                        :score => Float.ceil(elem.score + r.score / 3)
+                        :score => Float.ceil(elem.score + r.score / 3) + 20
                     }
                 else
                     %{}
@@ -80,11 +84,15 @@ defmodule Asteroidsio.PlayerChannel do
           Asteroidsio.Bucket.update(socket.assigns.player_id, fn elem ->
             IO.puts("Player also damaged")
             IO.inspect(elem[:health])
-            %{
-                elem |
-                :health => elem[:health] - 1,
-                :last_hit => nil
-            }
+            if elem != nil && elem != %{} do
+                %{
+                    elem |
+                    :health => elem[:health] - 1,
+                    :last_hit => nil
+                }
+            else
+                %{}
+            end
           end)
         end
     end)

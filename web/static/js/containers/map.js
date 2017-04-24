@@ -18,14 +18,19 @@ class Map extends Component {
         clearTimeout(this.collisionInterval)
     }
 
+    componentWillUpdate() {
+        if (this.props.playerId != null) {
+            let player = this.props.players[this.props.playerId]
+            if (player != null && player.health <= 0) {
+                this.props.disconnect()
+            }
+        }
+    }
+
     render() {
-        const { w, h, playerId, players, asteroids, disconnect } = this.props
+        const { w, h, playerId, players, topTen, asteroids, disconnect } = this.props
         const player = players[playerId]
         if (player == null) return null
-
-        if (player.health <= 0) {
-            disconnect()
-        }
 
         const transform = `translate(${ w / 2 } ${ h / 2 }) rotate(${player.direction} 15 16)`
 
@@ -39,6 +44,28 @@ class Map extends Component {
                       fill="#FFFFFF">
                     { `Score: ${player.score}` }
                 </text>
+                <text
+                    x={ w - 150 }
+                    y={ 30 }
+                    fontFamily="Verdana"
+                    fontSize="25"
+                    fill="#FFFFFF">
+                    Top 10
+                </text>
+                {
+                    Object.keys(topTen).map((key, idx) => {
+                        return (
+                            <text
+                                x={ w - 150 }
+                                y={ 60 + 30 * idx }
+                                fontFamily="Verdana"
+                                fontSize="25"
+                                fill="#FFFFFF">
+                                {idx + 1}. {topTen[key].name} - {topTen[key].score}
+                            </text>
+                        )
+                    })
+                }
                 {
                     Object.keys(players).map((pk, idx) => {
                         if (pk == playerId) return;
@@ -305,6 +332,7 @@ const mapStateToProps = (state, ownProps) => ({
     playerId: state.player.id,
     players: state.game.players,
     asteroids: state.game.asteroids,
+    topTen: state.game.topTen
 })
 
 const mapDispatchToProps = (dispatch) => ({
