@@ -19,6 +19,7 @@ export const BASE_SPEED = 10
 export const BASE_ROTATION_SPEED = 2
 export const RECEIVE_PLAYER_ID = 'RECEIVE_PLAYER_ID'
 export const PLAYER_COLLIDED = 'PLAYER_COLLIDED'
+export const COLLISIONS = 'COLLISIONS'
 
 // Server types
 export const PLAYER = 'player'

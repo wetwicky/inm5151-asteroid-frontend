@@ -32,6 +32,19 @@ defmodule Asteroidsio.Bucket do
   end
 
   @doc """
+  Update a value of the map with a function.
+  """
+  def update(key, f) do
+    Agent.get_and_update(:bucket, fn dict ->
+      content = Map.get(dict, key, %{})
+      newContent = f.(content)
+      result = Map.merge(content, newContent)
+      {result,
+       Map.put(dict, key, result)}
+    end)
+  end
+
+  @doc """
   Update all values of the map with a function.
   """
   def update_all(f) do

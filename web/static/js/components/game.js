@@ -26,7 +26,6 @@ class Game extends Component {
             return
         }
 
-        console.log("key down:", e);
         if (e.keyCode == 37 || e.keyCode == 65) { // Left
             this.props.leftPressed()
         } else if (e.keyCode == 38 || e.keyCode == 188) { // Up
@@ -39,7 +38,6 @@ class Game extends Component {
     }
 
     onKeyUp(e) {
-        console.log("key up:", e);
         if (e.keyCode == 37 || e.keyCode == 65) { // Left
             this.props.leftReleased()
         } else if (e.keyCode == 38 || e.keyCode == 188) { // Up
@@ -49,7 +47,6 @@ class Game extends Component {
         } else if (e.keyCode == 32) { // Space
             this.props.spaceReleased()
         }
-
     }
 
     render() {
