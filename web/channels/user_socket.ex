@@ -32,7 +32,8 @@ defmodule Asteroidsio.UserSocket do
         :last_update => nil,
         :bullets => [],
         :last_time_fired => nil,
-        :score => 0
+        :score => 0,
+        :health => 10
     })
 
     {:ok, assign(socket, :player_id, player_id)}

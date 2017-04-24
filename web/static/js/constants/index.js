@@ -17,6 +17,7 @@ export const GET_PLAYERS = 'GET_PLAYERS'
 export const PLAYER_LEFT = 'PLAYER_LEFT'
 export const BASE_SPEED = 10
 export const BASE_ROTATION_SPEED = 2
+export const MAX_HEALTH = 10
 export const RECEIVE_PLAYER_ID = 'RECEIVE_PLAYER_ID'
 export const PLAYER_COLLIDED = 'PLAYER_COLLIDED'
 
