@@ -21,11 +21,13 @@ defmodule Asteroidsio.UserSocket do
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
   def connect(params, socket) do
+    x = Enum.random(-400..400)
+    y = Enum.random(-400..400)
     player_id = add(%{
         :type => :player,
         :name => params["name"] |> String.slice(0,15),
-        :x => 0,
-        :y => 0,
+        :x => x,
+        :y => y,
         :direction => 90,
         :dx => 0,
         :dy => 0,
