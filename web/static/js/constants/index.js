@@ -17,13 +17,13 @@ export const GET_PLAYERS = 'GET_PLAYERS'
 export const PLAYER_LEFT = 'PLAYER_LEFT'
 export const BASE_SPEED = 10
 export const BASE_ROTATION_SPEED = 2
-export const MAX_HEALTH = 100
+export const MAX_HEALTH = 50
 export const RECEIVE_PLAYER_ID = 'RECEIVE_PLAYER_ID'
 export const PLAYER_COLLIDED = 'PLAYER_COLLIDED'
 export const COLLISIONS = 'COLLISIONS'
 
 // Asteroid
-export const MAX_HEALTH_ASTEROID = 50
+export const MAX_HEALTH_ASTEROID = 100
 
 // Top ten
 export const UPDATE_TOP_TEN = "UPDATE_TOP_TEN"
