@@ -24,7 +24,8 @@ defmodule Asteroidsio.GameLoop do
              :last_time_fired => last_time_fired,
              :last_update => last_update,
              :bullets => bullets,
-             :score => score
+             :score => score,
+             :health => health
             }} ->
         updatePlayers(id,
           v,
@@ -40,7 +41,8 @@ defmodule Asteroidsio.GameLoop do
           last_time_fired,
           last_update,
           bullets,
-          score)
+          score,
+          health)
 
       {id, %{:type => :asteroid,
              :x => x,

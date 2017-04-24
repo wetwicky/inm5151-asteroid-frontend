@@ -17,7 +17,8 @@ defmodule Asteroidsio.Player do
                     last_time_fired,
                     last_update,
                     bullets,
-                    score) do
+                    score,
+                    health) do
     now = :os.system_time(:milli_seconds)
     delta = if last_update != nil, do: now - last_update, else: 0
     deltaPercent = delta / (1000 / 30)
@@ -59,6 +60,7 @@ defmodule Asteroidsio.Player do
     end
 
     newScore = score #TODO set new score depend on collision
+    newHealth = health
 
     {id, %{v | :x => newX,
                :y => newY,
@@ -68,6 +70,7 @@ defmodule Asteroidsio.Player do
                :last_update => now,
                :bullets => newBullets,
                :last_time_fired => last_time_fired,
-               :score => newScore}}
+               :score => newScore,
+               :health => newHealth}}
   end
 end
