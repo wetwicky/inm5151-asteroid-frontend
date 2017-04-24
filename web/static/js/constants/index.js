@@ -23,7 +23,7 @@ export const PLAYER_COLLIDED = 'PLAYER_COLLIDED'
 export const COLLISIONS = 'COLLISIONS'
 
 // Asteroid
-export const MAX_HEALTH_ASTEROID = 100
+export const MAX_HEALTH_ASTEROID = 50
 
 // Top ten
 export const UPDATE_TOP_TEN = "UPDATE_TOP_TEN"

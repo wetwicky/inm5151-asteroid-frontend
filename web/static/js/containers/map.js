@@ -45,7 +45,7 @@ class Map extends Component {
                     { `Score: ${player.score}` }
                 </text>
                 <text
-                    x={ w - 200 }
+                    x={ w - 300 }
                     y={ 30 }
                     fontFamily="Verdana"
                     fontSize="25"
@@ -56,7 +56,7 @@ class Map extends Component {
                     Object.keys(topTen).map((key, idx) => {
                         return (
                             <text
-                                x={ w - 150 }
+                                x={ w - 300 }
                                 y={ 60 + 30 * idx }
                                 fontFamily="Verdana"
                                 fontSize="25"
